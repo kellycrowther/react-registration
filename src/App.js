@@ -62,6 +62,21 @@ class App extends Component {
           </button>
           </div>
         </div>
+        <div className="add-activity">
+          <h3>Add Activity</h3>
+          <form>
+            Class Name:<br />
+            <input type="text" placeholder="Class Name" /><br />
+            Enter Date:<br />
+            <input type="date" placeholder="Enter Date" /><br />
+            Enter Location:<br />
+            <input type="text" placeholder="Location" /><br />
+            Age:<br />
+            <input type="text" placeholder="Age" /><br />
+            Price:<br />
+            <input type="text" placeholder="Price" />
+          </form>
+        </div>
       </div>
     );
   }
