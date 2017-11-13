@@ -1,9 +1,47 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Registration from './Registration';
+import AddActivity from './AddActivity';
+
+const state = [
+  {
+    activityName: 'Glass Fusing',
+    date: 1528441200000, //in milliseconds
+    location: 'Lakeside Activity Center',
+    ageRestriction: '18 & Older',
+    price: 30,
+    uid: 1
+  },
+  {
+    activityName: 'Arts & Crafts',
+    date: 1528527600000, //in milliseconds
+    location: 'Lakeside Activity Center',
+    ageRestriction: '5 & Older',
+    price: 5,
+    uid: 2
+  },
+  {
+    activityName: 'Parents Night Out',
+    date: 1528614000000, //in milliseconds
+    location: 'Lakeside Activity Center',
+    ageRestriction: '5 & Older',
+    price: 25,
+    uid: 3
+  }
+];
 
 class App extends Component {
   render() {
+
+    const registrationComponents = state.map((activity, index) => (
+      <Registration
+        index={index}
+        activity={activity}
+        key={activity.uid}
+      />
+    ));
+
     return (
       <div className="App">
         <header className="App-header">
@@ -30,20 +68,7 @@ class App extends Component {
                   <th>Price</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <input type="checkbox" id="activity" />
-                  </td>
-                  <td>Glass Fusing</td>
-                  <td>June 8</td>
-                  <td>Friday</td>
-                  <td>10:30am</td>
-                  <td>Lakeside Activity Center</td>
-                  <td>18 & Older</td>
-                  <td>$30</td>
-                </tr>
-              </tbody>
+              { registrationComponents }
             </table>
           </div>
           <div className="cartSummary">
@@ -64,18 +89,7 @@ class App extends Component {
         </div>
         <div className="add-activity">
           <h3>Add Activity</h3>
-          <form>
-            Class Name:<br />
-            <input type="text" placeholder="Class Name" /><br />
-            Enter Date:<br />
-            <input type="date" placeholder="Enter Date" /><br />
-            Enter Location:<br />
-            <input type="text" placeholder="Location" /><br />
-            Age:<br />
-            <input type="text" placeholder="Age" /><br />
-            Price:<br />
-            <input type="text" placeholder="Price" />
-          </form>
+          <AddActivity />
         </div>
       </div>
     );
