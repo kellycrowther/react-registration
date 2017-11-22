@@ -31,7 +31,27 @@ const state = [
   }
 ];
 
+var nextUID = 4;
+
+// let state = [];
+
 class App extends Component {
+
+  addActivity = activityName => {
+    // console.log("Add Activity Clicked!", activityName);
+    state.push({
+      activityName: activityName,
+      date: 1528614000000, //in milliseconds
+      location: 'Lakeside Activity Center',
+      ageRestriction: '5 & Older',
+      price: 25,
+      uid: nextUID
+    });
+    // console.log("State on App: ", state);
+    this.setState(state);
+    nextUID ++;
+  }
+
   render() {
 
     const registrationComponents = state.map((activity, index) => (
@@ -89,7 +109,7 @@ class App extends Component {
         </div>
         <div className="add-activity">
           <h3>Add Activity</h3>
-          <AddActivity />
+          <AddActivity addActivity={this.addActivity}/>
         </div>
       </div>
     );
