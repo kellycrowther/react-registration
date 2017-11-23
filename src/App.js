@@ -7,7 +7,8 @@ import AddActivity from './AddActivity';
 const state = [
   {
     activityName: 'Glass Fusing',
-    date: 1528441200000, //in milliseconds
+    date: '2018-6-8', 
+    time: '10:30am',
     location: 'Lakeside Activity Center',
     ageRestriction: '18 & Older',
     price: 30,
@@ -15,7 +16,8 @@ const state = [
   },
   {
     activityName: 'Arts & Crafts',
-    date: 1528527600000, //in milliseconds
+    date: '2018-6-8', 
+    time: '10:30am',
     location: 'Lakeside Activity Center',
     ageRestriction: '5 & Older',
     price: 5,
@@ -23,7 +25,8 @@ const state = [
   },
   {
     activityName: 'Parents Night Out',
-    date: 1528614000000, //in milliseconds
+    date: '2018-6-8', 
+    time: '10:30am',
     location: 'Lakeside Activity Center',
     ageRestriction: '5 & Older',
     price: 25,
@@ -37,14 +40,15 @@ var nextUID = 4;
 
 class App extends Component {
 
-  addActivity = activityName => {
-    // console.log("Add Activity Clicked!", activityName);
+  addActivity = prop => {
+    console.log("Add Activity Clicked!", prop);
     state.push({
-      activityName: activityName,
-      date: 1528614000000, //in milliseconds
-      location: 'Lakeside Activity Center',
+      activityName: prop.activityName,
+      date: prop.date,
+      time: prop.time,
+      location: prop.location,
       ageRestriction: '5 & Older',
-      price: 25,
+      price: prop.price,
       uid: nextUID
     });
     // console.log("State on App: ", state);
@@ -109,7 +113,9 @@ class App extends Component {
         </div>
         <div className="add-activity">
           <h3>Add Activity</h3>
-          <AddActivity addActivity={this.addActivity}/>
+          <AddActivity 
+            addActivity={this.addActivity}
+          />
         </div>
       </div>
     );
