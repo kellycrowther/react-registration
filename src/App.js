@@ -3,36 +3,41 @@ import logo from './logo.svg';
 import './App.css';
 import Registration from './Registration';
 import AddActivity from './AddActivity';
+import CartSummary from './CartSummary';
 
-const state = [
+const state =
   {
-    activityName: 'Glass Fusing',
-    date: '2018-6-8', 
-    time: '10:30am',
-    location: 'Lakeside Activity Center',
-    ageRestriction: '18 & Older',
-    price: 30,
-    uid: 1
-  },
-  {
-    activityName: 'Arts & Crafts',
-    date: '2018-6-8', 
-    time: '10:30am',
-    location: 'Lakeside Activity Center',
-    ageRestriction: '5 & Older',
-    price: 5,
-    uid: 2
-  },
-  {
-    activityName: 'Parents Night Out',
-    date: '2018-6-8', 
-    time: '10:30am',
-    location: 'Lakeside Activity Center',
-    ageRestriction: '5 & Older',
-    price: 25,
-    uid: 3
-  }
-];
+    availableActivity: [
+      {
+        activityName: 'Glass Fusing',
+        date: '2018-6-8',
+        time: '10:30am',
+        location: 'Lakeside Activity Center',
+        ageRestriction: '18 & Older',
+        price: 30,
+        uid: 1
+      },
+      {
+        activityName: 'Arts & Crafts',
+        date: '2018-6-8',
+        time: '10:30am',
+        location: 'Lakeside Activity Center',
+        ageRestriction: '5 & Older',
+        price: 5,
+        uid: 2
+      },
+      {
+        activityName: 'Parents Night Out',
+        date: '2018-6-8',
+        time: '10:30am',
+        location: 'Lakeside Activity Center',
+        ageRestriction: '5 & Older',
+        price: 25,
+        uid: 3
+      }
+    ],
+    cart: []
+  };
 
 var nextUID = 4;
 
@@ -40,9 +45,29 @@ var nextUID = 4;
 
 class App extends Component {
 
+
+  activitySelection = e => {
+    let myUID = parseInt(e.target.value, 10);
+    let activitySelection = state.availableActivity.find(function(activity) {
+      return activity.uid === myUID;
+    });
+    // console.log("My Index: ", activitySelection);
+    state.cart.push(activitySelection);
+    console.log("Cart Selection: ", state.cart);
+    this.setState(state);
+  }
+
+  // cartClick = e => {
+  //   console.log("Cart Click");
+  //   cart.map((activity, index) => {
+  //     // if()
+  //     return console.log('Cart UID: ', activity);
+  //   })
+  // }
+
   addActivity = prop => {
     console.log("Add Activity Clicked!", prop);
-    state.push({
+    state.availableActivity.push({
       activityName: prop.activityName,
       date: prop.date,
       time: prop.time,
@@ -58,11 +83,14 @@ class App extends Component {
 
   render() {
 
-    const registrationComponents = state.map((activity, index) => (
+    console.log(state.cart);
+
+    const registrationComponents = state.availableActivity.map((activity, index) => (
       <Registration
         index={index}
         activity={activity}
         key={activity.uid}
+        onChange={this.activitySelection}
       />
     ));
 
@@ -94,22 +122,15 @@ class App extends Component {
               </thead>
               { registrationComponents }
             </table>
+            <button
+              onClick={this.cartClick}
+              >
+              Add To Cart
+            </button>
           </div>
-          <div className="cartSummary">
-            <h3>Cart Summary</h3>
-            <div>
-              <h5>My Classes</h5>
-              <h5>Price</h5>
-            </div>
-            <div>
-              <p>Some Class</p>
-              <p>Some Price</p>
-            </div>
-            <h4>Total: $55</h4>
-            <button>
-              Checkout
-          </button>
-          </div>
+          <CartSummary 
+            cartSelection = {state.cart}
+          />
         </div>
         <div className="add-activity">
           <h3>Add Activity</h3>

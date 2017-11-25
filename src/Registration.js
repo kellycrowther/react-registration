@@ -7,7 +7,12 @@ const Registration = props => {
         <tbody>
             <tr>
                 <td>
-                    <input type="checkbox" id="activity" />
+                    <input 
+                        type="checkbox" 
+                        id="activity"
+                        value={props.activity.uid}
+                        onChange={props.onChange}
+                        />
                 </td>
                 <td>{props.activity.activityName}</td>
                 <td>{props.activity.date}</td>

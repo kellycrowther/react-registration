@@ -51,6 +51,10 @@
   flex: 1;
 }
 
+.addToCart {
+  display: flex;
+}
+
 .add-activity {
   /* color: white; */
   background-color: rgba(0, 0, 0, 0.3); 
