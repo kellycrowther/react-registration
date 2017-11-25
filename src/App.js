@@ -83,8 +83,6 @@ class App extends Component {
 
   render() {
 
-    console.log(state.cart);
-
     const registrationComponents = state.availableActivity.map((activity, index) => (
       <Registration
         index={index}

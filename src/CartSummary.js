@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 
-export default class CartSummary extends Component {
+import CartActivity from './CartActivity';
 
-    constructor(props){
-        super(props);
-        // console.log("Cart Summary: ", props);
-    }
-    
+export default class CartSummary extends Component {
     render() {
-        if (this.props.cartSelection[0] !== undefined) {
-            console.log("Cart Summary: ", this.props.cartSelection[0].price);
-        }
+
+        const cartActivityComponents = this.props.cartSelection.map((activity, index) => {
+            return <CartActivity 
+                activity={activity}
+                key={index}
+            />
+        })
         
         return(
             <div className="cartSummary">
@@ -19,19 +19,7 @@ export default class CartSummary extends Component {
                     <h5>My Classes</h5>
                     <h5>Price</h5>
                 </div>
-                <div>
-                    {this.props.cartSelection[0] ?
-                    <p>{this.props.cartSelection[0].activityName}</p>
-                    :
-                    <p>None Selected</p>
-                    }
-                    
-                    {this.props.cartSelection[0] ? 
-                    <p>{this.props.cartSelection[0].price}</p> 
-                    :
-                    <p>0</p>
-                    }
-                </div>
+                { cartActivityComponents }
                 <h4>Total: $55</h4>
                 <button>
                     Checkout
