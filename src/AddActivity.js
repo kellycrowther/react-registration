@@ -5,29 +5,35 @@ import AgeRestriction from './AgeRestriction';
 export default class AddActivity extends Component {
 
     state = {
-        activityName: '',
-        date: '',
-        time: '',
-        location: '',
-        ageRestriction: '',
-        price: 0,
-        uid: 1
+        newActivity: {
+            activityName: '',
+            date: '',
+            time: '',
+            location: '',
+            ageRestriction: '',
+            price: 0,
+            uid: 1
+        },
+        ageLimits: [
+            {
+                ageRestriction: '5 & Up',
+                selected: false
+            },
+            {
+                ageRestriction: '10 & Up',
+                selected: false
+            },
+            {
+                ageRestriction: '18 & Up',
+                selected: false
+            },
+            {
+                ageRestriction: '21 & Up',
+                selected: false
+            }
+        ],
+        selectedAge: ''
     };
-
-    ageLimits = [
-        {
-            ageRestriction: '5 & Up',
-        },
-        {
-            ageRestriction: '10 & Up',
-        },
-        {
-            ageRestriction: '18 & Up',
-        },
-        {
-            ageRestriction: '21 & Up',
-        }
-    ];
 
     // trying to keep code dry by using switch instead of multiple functions
     onInputChange = (e) => {
@@ -60,13 +66,12 @@ export default class AddActivity extends Component {
                 break;
 
             case 'Age Restriction':
-                console.log("Radio Change", e.target.value);
-                const ageRestriction = e.target.value;
-                // let newSelectionArray;
+                // console.log("Radio Change", e.target.value);
+                // const ageRestriction = e.target.value;
+                // // let newSelectionArray;
+                // let radioIndex = this.ageLimits.indexOf(e.target.value);
                 
-                if(this.state.ageRestriction === e.target.value) {
-                    this.setState({ ageRestriction: ageRestriction })
-                }
+                // this.ageLimits[0].selected === true;
                 // this.setState({ location: location });
                 // let mySlice = this.ageLimits.slice(0, restrictionIndex);
                 // console.log("My Slice: ", mySlice);
@@ -80,32 +85,27 @@ export default class AddActivity extends Component {
     onSubmit = e => {
         if(e) e.preventDefault();
         console.log('My Activity Added', this.state.activityName);
-        this.props.addActivity(this.state);
+        this.props.addActivity(this.state.newActivity);
         this.setState({ 
-            activityName: '',
-            date: '',
-            time: '',
-            location: '',
-            ageRestriction: '',
-            price: 0,
-            uid: 1
+            newActivity: {
+                activityName: '',
+                date: '',
+                time: '',
+                location: '',
+                ageRestriction: '',
+                price: 0,
+                uid: 1
+            }
         });
     }
 
-    onRadioChange = (index, e) => {
-        console.log("Radio Change", index);
+    onRadioChange = e => {
+        // this.state.selectedAge = e.target.value;
+        // console.log("state selected age: ", this.state.selectedAge);
+        this.setState({selectedAge: e.target.value});
     }
 
     render() {
-
-        const AgeRestrictionComponents = this.ageLimits.map((restriction, index) => (
-            <AgeRestriction
-                index={index}
-                restriction={restriction}
-                key={index}
-                onChange={this.onInputChange}
-            />
-        ));
 
         return (
             <form onSubmit={this.onSubmit}>
@@ -113,21 +113,21 @@ export default class AddActivity extends Component {
                 <input 
                     type="text" 
                     placeholder="Class Name" 
-                    value={this.state.activityName}
+                    value={this.state.newActivity.activityName}
                     onChange={this.onInputChange}
                     /><br />
                 Enter Date:<br />
                 <input 
                     type="date" 
                     placeholder="Enter Date" 
-                    value={this.state.date}
+                    value={this.state.newActivity.date}
                     onChange={this.onInputChange}
                     /><br />
                 Enter Time:<br />
                 <input 
                     type="time" 
                     placeholder="Enter Time" 
-                    value={this.state.time}
+                    value={this.state.newActivity.time}
                     onChange={this.onInputChange}
                     /><br />
                 Enter Location:<br />
@@ -152,14 +152,17 @@ export default class AddActivity extends Component {
                 </label><br />
                 Age:<br />
                 
-                { AgeRestrictionComponents }
+                <AgeRestriction 
+                    restrictions={this.state}
+                    onChange={this.onRadioChange}
+                />
                 
                 <br />
                 Price:<br />
                 <input 
                     type="text" 
                     placeholder="Price" 
-                    value={this.state.price}
+                    value={this.state.newActivity.price}
                     onChange={this.onInputChange}
                     /><br />
                 <input type="submit" value="Add Activity" />

@@ -13,12 +13,12 @@ export default class CartSummary extends Component {
 
         // console.log("Cart Summary: ", this.props.cartSelection);
         let myTotal = 0; 
-        const total = this.props.cartSelection.map((price, index) => {
+        this.props.cartSelection.map((price, index) => {
             // console.log(price.price);
-            myTotal = myTotal + price.price;
+            return myTotal = myTotal + price.price;
         });
 
-        console.log("my total: ", myTotal);
+        // console.log("my total: ", myTotal);
         
         return(
             <div className="cartSummary">

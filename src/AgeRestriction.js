@@ -1,25 +1,28 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-export default class AgeRestriction extends Component {
 
-    restrictionSelected = e => {
-        console.log("Age Restrict: ", e.target.value);
-        this.props.restriction.selected = true;
-    }
+const AgeRestriction = (props) => (
+    
+    <div>
+        <label className="form-label">{props.title}</label>
+        <div className="checkbox-group">
+            {props.restrictions.ageLimits.map((restriction, index) => {
+                return (
+                    <label key={index}>
+                        <input
+                            name={restriction.ageRestriction}
+                            value={restriction.ageRestriction}
+                            checked={props.restrictions.selectedAge === restriction.ageRestriction}
+                            onChange={props.onChange}
+                            type='radio' />
+                             {restriction.ageRestriction}
+                    </label>
+                );
+            })}
+        </div>
+    </div>
+);
+// onChange={props.controlFunc}
+// checked={props.selectedOptions.indexOf(restriction) > -1}
 
-    render() {
-        return (
-            <label>
-                <input
-                    type="radio"
-                    placeholder="Age Restriction"
-                    value={this.props.restriction.ageRestriction}
-                    checked={this.props.restriction.selected}
-                    onChange={this.props.onChange}
-                />
-                {this.props.restriction.ageRestriction}
-            </label>
-        );
-    }
-
-}
+export default AgeRestriction;
