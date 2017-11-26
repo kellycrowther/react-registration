@@ -39,30 +39,58 @@ export default class AddActivity extends Component {
     onInputChange = (e) => {
         switch(e.target.placeholder) {
             case 'Class Name':
-                // console.log("Name Target: ", e.target.value);
+                console.log("Name Target: ", e.target.value);
                 const activityName = e.target.value;
-                this.setState({ activityName: activityName });
+                this.setState({ 
+                    newActivity: {
+                        ...this.state.newActivity,
+                        activityName: activityName
+                    } 
+                });
                 break;
 
             case 'Enter Date':
                 // console.log("Date Target: ", e.target.value);
                 const date = e.target.value;
-                this.setState({ date: date });
+                this.setState({ 
+                    newActivity: {
+                        ...this.state.newActivity,
+                        date: date
+                    } 
+                });
                 break;
 
             case 'Enter Time':
                 const time = e.target.value;
-                this.setState({ time: time });
+                this.setState({ 
+                    newActivity: {
+                        ...this.state.newActivity,
+                        time: time
+                    }
+                 });
                 break;
 
             case 'Price':
                 let price = e.target.value;
                 price = parseInt(price, 10) || 0;
-                this.setState({ price: price });
+                this.setState({ 
+                    newActivity: {
+                        ...this.state.newActivity,
+                        price: price
+                    }
+                 });
                 break;
 
             case 'Location':
                 console.log("Location: ", e.target.value);
+                // const location = e.target.value;
+                // this.setState({ selectedAge: location });
+                // this.setState({
+                //     newActivity: {
+                //         ...this.state.newActivity,
+                //         location: location
+                //     }
+                // })
                 break;
 
             case 'Age Restriction':
@@ -102,7 +130,14 @@ export default class AddActivity extends Component {
     onRadioChange = e => {
         // this.state.selectedAge = e.target.value;
         // console.log("state selected age: ", this.state.selectedAge);
+        const age = e.target.value;
         this.setState({selectedAge: e.target.value});
+        this.setState({
+            newActivity: {
+                ...this.state.newActivity,
+                ageRestriction: age
+            }
+        })
     }
 
     render() {
