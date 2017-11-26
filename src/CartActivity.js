@@ -4,7 +4,7 @@ const CartActivity = props => {
     return (
         <div>
             <p>{props.activity.activityName}</p>
-            <p>{props.activity.price}</p>
+            <p>${props.activity.price}</p>
         </div>
     );
 }

@@ -4,13 +4,21 @@ import CartActivity from './CartActivity';
 
 export default class CartSummary extends Component {
     render() {
-
         const cartActivityComponents = this.props.cartSelection.map((activity, index) => {
             return <CartActivity 
                 activity={activity}
                 key={index}
             />
-        })
+        });
+
+        // console.log("Cart Summary: ", this.props.cartSelection);
+        let myTotal = 0; 
+        const total = this.props.cartSelection.map((price, index) => {
+            // console.log(price.price);
+            myTotal = myTotal + price.price;
+        });
+
+        console.log("my total: ", myTotal);
         
         return(
             <div className="cartSummary">
@@ -20,7 +28,7 @@ export default class CartSummary extends Component {
                     <h5>Price</h5>
                 </div>
                 { cartActivityComponents }
-                <h4>Total: $55</h4>
+                <h4>Total: ${myTotal}</h4>
                 <button>
                     Checkout
                 </button>
