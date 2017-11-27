@@ -11,6 +11,7 @@ const AgeRestriction = (props) => (
                     <label key={index}>
                         <input
                             name={restriction.ageRestriction}
+                            placeholder="Age Restriction"
                             value={restriction.ageRestriction}
                             checked={props.restrictions.selectedAge === restriction.ageRestriction}
                             onChange={props.onChange}

@@ -72,7 +72,7 @@ class App extends Component {
       date: prop.date,
       time: prop.time,
       location: prop.location,
-      ageRestriction: '5 & Older',
+      ageRestriction: prop.ageRestriction,
       price: prop.price,
       uid: nextUID
     });

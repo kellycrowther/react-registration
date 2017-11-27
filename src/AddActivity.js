@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AgeRestriction from './AgeRestriction';
+import Location from './Location';
 
 export default class AddActivity extends Component {
 
@@ -32,14 +33,19 @@ export default class AddActivity extends Component {
                 selected: false
             }
         ],
-        selectedAge: ''
+        selectedAge: '',
+        locations: [
+            'Lakeside Activity Center',
+            'Glaze Meadow Recreation Center'
+        ],
+        selectedLocation: ''
     };
 
     // trying to keep code dry by using switch instead of multiple functions
     onInputChange = (e) => {
         switch(e.target.placeholder) {
             case 'Class Name':
-                console.log("Name Target: ", e.target.value);
+                // console.log("Name Target: ", e.target.value);
                 const activityName = e.target.value;
                 this.setState({ 
                     newActivity: {
@@ -82,28 +88,26 @@ export default class AddActivity extends Component {
                 break;
 
             case 'Location':
-                console.log("Location: ", e.target.value);
-                // const location = e.target.value;
-                // this.setState({ selectedAge: location });
-                // this.setState({
-                //     newActivity: {
-                //         ...this.state.newActivity,
-                //         location: location
-                //     }
-                // })
+                // console.log("Location: ", e.target.value);
+                const location = e.target.value;
+                this.setState({ selectedLocation: location });
+                this.setState({
+                    newActivity: {
+                        ...this.state.newActivity,
+                        location: location
+                    }
+                })
                 break;
 
             case 'Age Restriction':
-                // console.log("Radio Change", e.target.value);
-                // const ageRestriction = e.target.value;
-                // // let newSelectionArray;
-                // let radioIndex = this.ageLimits.indexOf(e.target.value);
-                
-                // this.ageLimits[0].selected === true;
-                // this.setState({ location: location });
-                // let mySlice = this.ageLimits.slice(0, restrictionIndex);
-                // console.log("My Slice: ", mySlice);
-                // this.ageLimits[restrictionIndex].selected = !this.ageLimits[restrictionIndex].selected;
+                const age = e.target.value;
+                this.setState({ selectedAge: e.target.value });
+                this.setState({
+                    newActivity: {
+                        ...this.state.newActivity,
+                        ageRestriction: age
+                    }
+                })
                 break;
             default:
                 break;
@@ -112,7 +116,7 @@ export default class AddActivity extends Component {
 
     onSubmit = e => {
         if(e) e.preventDefault();
-        console.log('My Activity Added', this.state.activityName);
+        // console.log('My Activity Added', this.state.activityName);
         this.props.addActivity(this.state.newActivity);
         this.setState({ 
             newActivity: {
@@ -125,19 +129,6 @@ export default class AddActivity extends Component {
                 uid: 1
             }
         });
-    }
-
-    onRadioChange = e => {
-        // this.state.selectedAge = e.target.value;
-        // console.log("state selected age: ", this.state.selectedAge);
-        const age = e.target.value;
-        this.setState({selectedAge: e.target.value});
-        this.setState({
-            newActivity: {
-                ...this.state.newActivity,
-                ageRestriction: age
-            }
-        })
     }
 
     render() {
@@ -166,30 +157,17 @@ export default class AddActivity extends Component {
                     onChange={this.onInputChange}
                     /><br />
                 Enter Location:<br />
-                <label>
-                        <input 
-                            type="radio" 
-                            placeholder="Location"
-                            value='Lakeside Activity Center'
-                            onChange={this.onInputChange}
-                            />
-                    Lakeside Activity Center
-                </label><br />
-                <label>
-                    <input
-                        type="radio"
-                        placeholder="Location"
-                        checked={true}
-                        value='Glaze Meadow Recreation Center'
-                        onChange={this.onInputChange}
-                    />
-                    Glaze Meadow Recreation Center
-                </label><br />
+
+                <Location 
+                    locations={this.state}
+                    onChange={this.onInputChange}
+                />
+
                 Age:<br />
                 
                 <AgeRestriction 
                     restrictions={this.state}
-                    onChange={this.onRadioChange}
+                    onChange={this.onInputChange}
                 />
                 
                 <br />
