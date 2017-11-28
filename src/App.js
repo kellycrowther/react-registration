@@ -15,7 +15,8 @@ const state =
         location: 'Lakeside Activity Center',
         ageRestriction: '18 & Older',
         price: 30,
-        uid: 1
+        uid: 1,
+        canEdit: false
       },
       {
         activityName: 'Arts & Crafts',
@@ -24,7 +25,8 @@ const state =
         location: 'Lakeside Activity Center',
         ageRestriction: '5 & Older',
         price: 5,
-        uid: 2
+        uid: 2,
+        canEdit: false
       },
       {
         activityName: 'Parents Night Out',
@@ -33,7 +35,8 @@ const state =
         location: 'Lakeside Activity Center',
         ageRestriction: '5 & Older',
         price: 25,
-        uid: 3
+        uid: 3,
+        canEdit: false
       }
     ],
     cart: []
@@ -81,6 +84,16 @@ class App extends Component {
     nextUID ++;
   }
 
+  handleDoubleClick = (index, e) => {
+    console.log("Double Click Fired", index);
+
+    state.availableActivity[index].canEdit = !state.availableActivity[index].canEdit;
+
+    this.setState(state);
+
+    // console.log("Can Edit State: ", )
+  }
+
   render() {
 
     const registrationComponents = state.availableActivity.map((activity, index) => (
@@ -89,6 +102,7 @@ class App extends Component {
         activity={activity}
         key={activity.uid}
         onChange={this.activitySelection}
+        onDoubleClick={(e) => this.handleDoubleClick(index, e)}
       />
     ));
 
