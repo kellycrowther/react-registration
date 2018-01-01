@@ -94,6 +94,10 @@ class App extends Component {
     // console.log("Can Edit State: ", )
   }
 
+  handleSave = state => {
+    console.log("Save Clicked", state);
+  }
+
   render() {
 
     const registrationComponents = state.availableActivity.map((activity, index) => (
@@ -103,6 +107,7 @@ class App extends Component {
         key={activity.uid}
         onChange={this.activitySelection}
         onDoubleClick={(e) => this.handleDoubleClick(index, e)}
+        onClick={(state) => this.handleSave(state)}
       />
     ));
 
@@ -119,21 +124,22 @@ class App extends Component {
         <div className="app-main">
           <div className="registration">
             <h3>Class Registration</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Select</th>
-                  <th>Class Name</th>
-                  <th>Date</th>
-                  <th>Day</th>
-                  <th>Time</th>
-                  <th>Location</th>
-                  <th>Age</th>
-                  <th>Price</th>
-                </tr>
-              </thead>
+            <div>
+              <div className="registration-titles">
+                <h4>Select</h4>
+                <h4>Class Name</h4>
+                <h4>Date</h4>
+                <h4>Day</h4>
+                <h4>Time</h4>
+                <h4>Location</h4>
+                <h4>Age</h4>
+                <h4>Price</h4>
+              </div>
               { registrationComponents }
-            </table>
+              <AddActivity
+                addActivity={this.addActivity}
+              />
+            </div>
             <button
               onClick={this.cartClick}
               >
@@ -142,12 +148,6 @@ class App extends Component {
           </div>
           <CartSummary 
             cartSelection = {state.cart}
-          />
-        </div>
-        <div className="add-activity">
-          <h3>Add Activity</h3>
-          <AddActivity 
-            addActivity={this.addActivity}
           />
         </div>
       </div>

@@ -61,6 +61,22 @@
   /* display: flex; */
 }
 
+.registration-titles {
+  display: flex;
+}
+
+.registration-titles h4 {
+  flex: 1;
+}
+
+.activities {
+  display: flex;
+}
+
+.activities * {
+  flex: 1;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

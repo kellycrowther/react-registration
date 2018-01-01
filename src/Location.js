@@ -4,23 +4,21 @@ import React from 'react';
 const Location = (props) => (
 
     <div>
-        <label></label>
-        <div>
+        <select>
             {props.locations.locations.map((location, index) => {
                 return (
-                    <label key={index}>
-                        <input
-                            name={location}
-                            placeholder="Location"
-                            value={location}
-                            checked={props.locations.selectedLocation === location}
-                            onChange={props.onChange}
-                            type='radio' />
+                    <option
+                        key = {index}
+                        value={location}
+                        onChange={props.onChange}
+                        checked={props.locations.selectedLocation === location}
+                        placeholder="Location"
+                    >
                         {location}
-                    </label>
+                    </option>
                 );
             })}
-        </div>
+        </select>
     </div>
 );
 

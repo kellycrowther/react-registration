@@ -1,39 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 const Registration = props => {
+
     return (
-        <tbody
+        <div 
+            className="activities"
             onDoubleClick={props.onDoubleClick}
         >
-            <tr>
-                <td>
-                    <input 
-                        type="checkbox" 
-                        id="activity"
-                        value={props.activity.uid}
-                        />
-                </td>
-                {props.activity.canEdit ? 
-                    <td>
-                        <input 
-                        type="text" 
-                        placeholder={props.activity.activityName} 
-                        />
-                    </td>
-                :
-                    <td>{props.activity.activityName}</td>
-                }
-                
-                <td>{props.activity.date}</td>
-                <td>Friday</td>
-                <td>{props.activity.time}</td>
-                <td>{props.activity.location}</td>
-                <td>{props.activity.ageRestriction}</td>
-                <td>${props.activity.price}</td>
-            </tr>
-        </tbody>
+            <input
+                type="checkbox"
+                id="activity"
+                value={props.activity.uid}
+            />
+            <p>{props.activity.activityName}</p>
+            <p>{props.activity.date}</p>
+            <p>Friday</p>
+            <p>{props.activity.time}</p>
+            <p>{props.activity.location}</p>
+            <p>{props.activity.ageRestriction}</p>
+            <p>${props.activity.price}</p>
+        </div>
     );
 }
 

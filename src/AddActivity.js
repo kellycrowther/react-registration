@@ -35,8 +35,8 @@ export default class AddActivity extends Component {
         ],
         selectedAge: '',
         locations: [
-            'Lakeside Activity Center',
-            'Glaze Meadow Recreation Center'
+            'Lakeside',
+            'GMRC'
         ],
         selectedLocation: ''
     };
@@ -134,51 +134,51 @@ export default class AddActivity extends Component {
     render() {
 
         return (
-            <form onSubmit={this.onSubmit}>
-                Class Name:<br />
+            <form 
+                onSubmit={this.onSubmit}
+                className="activities"
+            > 
+                <input type="submit" value="Add Activity" />
                 <input 
                     type="text" 
                     placeholder="Class Name" 
                     value={this.state.newActivity.activityName}
                     onChange={this.onInputChange}
-                    /><br />
-                Enter Date:<br />
+                    />
+
                 <input 
                     type="date" 
                     placeholder="Enter Date" 
                     value={this.state.newActivity.date}
                     onChange={this.onInputChange}
-                    /><br />
-                Enter Time:<br />
+                    />
+
+                <div></div> {/* empty placeholder alignment*/}
+
                 <input 
                     type="time" 
                     placeholder="Enter Time" 
                     value={this.state.newActivity.time}
                     onChange={this.onInputChange}
-                    /><br />
-                Enter Location:<br />
+                    />
 
                 <Location 
                     locations={this.state}
                     onChange={this.onInputChange}
                 />
-
-                Age:<br />
                 
                 <AgeRestriction 
                     restrictions={this.state}
                     onChange={this.onInputChange}
                 />
                 
-                <br />
-                Price:<br />
                 <input 
                     type="text" 
                     placeholder="Price" 
                     value={this.state.newActivity.price}
                     onChange={this.onInputChange}
-                    /><br />
-                <input type="submit" value="Add Activity" />
+                    />
+                
             </form>
         );
     };
