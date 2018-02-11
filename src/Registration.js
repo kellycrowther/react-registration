@@ -12,6 +12,7 @@ const Registration = props => {
                 type="checkbox"
                 id="activity"
                 value={props.activity.uid}
+                onChange={props.onChange}
             />
             <p>{props.activity.activityName}</p>
             <p>{props.activity.date}</p>

@@ -44,8 +44,6 @@ const state =
 
 var nextUID = 4;
 
-// let state = [];
-
 class App extends Component {
 
 
@@ -54,19 +52,10 @@ class App extends Component {
     let activitySelection = state.availableActivity.find(function(activity) {
       return activity.uid === myUID;
     });
-    // console.log("My Index: ", activitySelection);
     state.cart.push(activitySelection);
     console.log("Cart Selection: ", state.cart);
     this.setState(state);
   }
-
-  // cartClick = e => {
-  //   console.log("Cart Click");
-  //   cart.map((activity, index) => {
-  //     // if()
-  //     return console.log('Cart UID: ', activity);
-  //   })
-  // }
 
   addActivity = prop => {
     console.log("Add Activity Clicked!", prop);
@@ -107,7 +96,6 @@ class App extends Component {
         key={activity.uid}
         onChange={this.activitySelection}
         onDoubleClick={(e) => this.handleDoubleClick(index, e)}
-        onClick={(state) => this.handleSave(state)}
       />
     ));
 
@@ -140,11 +128,6 @@ class App extends Component {
                 addActivity={this.addActivity}
               />
             </div>
-            <button
-              onClick={this.cartClick}
-              >
-              Add To Cart
-            </button>
           </div>
           <CartSummary 
             cartSelection = {state.cart}

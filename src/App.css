@@ -31,7 +31,7 @@
 
 .registration {
   width: 75%;
-  background-color: rgba(0, 0, 0, 0.3); 
+  padding-bottom: 50px;
 }
 
 .cartSummary {
@@ -63,6 +63,8 @@
 
 .registration-titles {
   display: flex;
+  background-color: rgba(0, 0, 0, 0.3);
+  margin: 10px;
 }
 
 .registration-titles h4 {
@@ -71,10 +73,19 @@
 
 .activities {
   display: flex;
+  background-color: rgba(0, 0, 0, 0.15);
+  margin: 10px;
 }
 
 .activities * {
   flex: 1;
+}
+
+.activities form {
+  padding: 5px;
+  margin: 5px;
+  background-color: black;
+  color: white;
 }
 
 @keyframes App-logo-spin {
