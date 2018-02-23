@@ -10,38 +10,7 @@ const DEFAULT_QUERY = '/activities';
 
 const state =
   {
-    availableActivity: [
-      // {
-      //   activityName: 'Glass Fusing',
-      //   date: '2018-6-8',
-      //   time: '10:30am',
-      //   location: 'Lakeside Activity Center',
-      //   ageRestriction: '18 & Older',
-      //   price: 30,
-      //   uid: 1,
-      //   canEdit: false
-      // },
-      // {
-      //   activityName: 'Arts & Crafts',
-      //   date: '2018-6-8',
-      //   time: '10:30am',
-      //   location: 'Lakeside Activity Center',
-      //   ageRestriction: '5 & Older',
-      //   price: 5,
-      //   uid: 2,
-      //   canEdit: false
-      // },
-      // {
-      //   activityName: 'Parents Night Out',
-      //   date: '2018-6-8',
-      //   time: '10:30am',
-      //   location: 'Lakeside Activity Center',
-      //   ageRestriction: '5 & Older',
-      //   price: 25,
-      //   uid: 3,
-      //   canEdit: false
-      // }
-    ],
+    availableActivity: [],
     cart: []
   };
 
@@ -51,8 +20,6 @@ class App extends Component {
 
 
   componentDidMount = () => {
-    //TODO: get the date/time into correct format
-    //TODO: get true/false into correct format
     // should i be calling setState? Or better way?
     // better way to set state then looping through?
     console.log('componentDidMount()~');
@@ -61,6 +28,8 @@ class App extends Component {
       .then(data => {
         console.log('data from local api: ', data);
         for(let x=0; x < data.length; x++) {
+          data[x].time = this.formatTime(data[x].date);
+          data[x].date = this.formatDate(data[x].date);
           state.availableActivity.push(data[x]);
         };
         console.log('state after fetch: ', state);
@@ -69,6 +38,18 @@ class App extends Component {
       .catch((err) => {
         console.log('error getting data', err);
       });
+  }
+
+  formatTime = (date) => {
+    let formattedTime = new Date(date);
+    formattedTime = formattedTime.toLocaleTimeString();
+    return formattedTime;
+  }
+
+  formatDate = (date) => {
+    let formattedDate = new Date(date);
+    formattedDate = formattedDate.toLocaleDateString();
+    return formattedDate;
   }
 
   activitySelection = e => {
