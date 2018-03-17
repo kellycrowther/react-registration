@@ -35,6 +35,7 @@ export default class AddActivity extends Component {
         ],
         selectedAge: '',
         locations: [
+            '',
             'Lakeside',
             'GMRC'
         ],
@@ -43,6 +44,7 @@ export default class AddActivity extends Component {
 
     // trying to keep code dry by using switch instead of multiple functions
     onInputChange = (e) => {
+        // console.log('My Event: ', e.target);
         switch(e.target.placeholder) {
             case 'Class Name':
                 // console.log("Name Target: ", e.target.value);
@@ -77,6 +79,7 @@ export default class AddActivity extends Component {
                 break;
 
             case 'Price':
+                 console.log('Price: ', e.target.value);
                 let price = e.target.value;
                 price = parseInt(price, 10) || 0;
                 this.setState({ 
@@ -85,18 +88,6 @@ export default class AddActivity extends Component {
                         price: price
                     }
                  });
-                break;
-
-            case 'Location':
-                // console.log("Location: ", e.target.value);
-                const location = e.target.value;
-                this.setState({ selectedLocation: location });
-                this.setState({
-                    newActivity: {
-                        ...this.state.newActivity,
-                        location: location
-                    }
-                })
                 break;
 
             case 'Age Restriction':
@@ -127,6 +118,18 @@ export default class AddActivity extends Component {
                 ageRestriction: '',
                 price: 0,
                 uid: 1
+            }
+        });
+    }
+
+    onSelectChange = e => {
+        console.log('Location Event: ', e.target.value);
+        const location = e.target.value;
+        this.setState({ selectedLocation: location });
+        this.setState({
+            newActivity: {
+                ...this.state.newActivity,
+                location: location
             }
         });
     }
@@ -163,8 +166,8 @@ export default class AddActivity extends Component {
                     />
 
                 <Location 
-                    locations={this.state}
-                    onChange={this.onInputChange}
+                    locations={this.state.locations}
+                    onChange={this.onSelectChange}
                 />
                 
                 <AgeRestriction 

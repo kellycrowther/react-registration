@@ -14,7 +14,7 @@ const state =
     cart: []
   };
 
-var nextUID = 4;
+var nextUID; // set in componentDidMount
 
 class App extends Component {
 
@@ -33,6 +33,7 @@ class App extends Component {
           state.availableActivity.push(data[x]);
         };
         console.log('state after fetch: ', state);
+        nextUID = (data.length + 1);
         this.setState(state);
       })
       .catch((err) => {
@@ -64,7 +65,7 @@ class App extends Component {
 
   addActivity = prop => {
     console.log("Add Activity Clicked!", prop);
-    state.availableActivity.push({
+    let data = {
       activityName: prop.activityName,
       date: prop.date,
       time: prop.time,
@@ -72,10 +73,25 @@ class App extends Component {
       ageRestriction: prop.ageRestriction,
       price: prop.price,
       uid: nextUID
-    });
-    // console.log("State on App: ", state);
-    this.setState(state);
-    nextUID ++;
+    };
+
+    state.availableActivity.push(data);
+    console.log("State on App: ", state);
+
+    // fetch(API + DEFAULT_QUERY, {
+    //   method: 'POST', // or 'PUT'
+    //   body: JSON.stringify(data),
+    //   headers: new Headers({
+    //     'Content-Type': 'application/json'
+    //   })
+    // }).then(res => {
+    //   res.json();
+    //   console.log('Success:', res);
+    //   this.setState(state);
+    //   nextUID++;
+    // })
+    //   .catch(error => console.error('Error:', error))
+    //   .then(response => console.log('Success:', response));
   }
 
   handleDoubleClick = (index, e) => {

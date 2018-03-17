@@ -4,13 +4,12 @@ import React from 'react';
 const Location = (props) => (
 
     <div>
-        <select>
-            {props.locations.locations.map((location, index) => {
+        <select onChange={props.onChange}>
+            {props.locations.map((location, index) => {
                 return (
                     <option
                         key = {index}
                         value={location}
-                        onChange={props.onChange}
                         checked={props.locations.selectedLocation === location}
                         placeholder="Location"
                     >
