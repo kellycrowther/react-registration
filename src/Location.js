@@ -7,6 +7,7 @@ const Location = (props) => {
             <select
                 onChange={props.onChange}
                 placeholder="Location"
+                name="location"
             >
                 {props.locations.map((location, index) => {
                     return (

@@ -7,6 +7,7 @@ const AgeRestriction = (props) => {
             <select
                 onChange={props.onChange}
                 placeholder="Age Restriction"
+                name="ageRestriction"
             >
                 {props.restrictions.map((ageLimit, index) => {
                     return (
