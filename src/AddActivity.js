@@ -16,22 +16,11 @@ export default class AddActivity extends Component {
             uid: 1
         },
         ageLimits: [
-            {
-                ageRestriction: '5 & Up',
-                selected: false
-            },
-            {
-                ageRestriction: '10 & Up',
-                selected: false
-            },
-            {
-                ageRestriction: '18 & Up',
-                selected: false
-            },
-            {
-                ageRestriction: '21 & Up',
-                selected: false
-            }
+            '',
+            '5 & Up',
+            '10 & Up',
+            '18 & Up',
+            '21 & Up'
         ],
         selectedAge: '',
         locations: [
@@ -90,16 +79,6 @@ export default class AddActivity extends Component {
                  });
                 break;
 
-            case 'Age Restriction':
-                const age = e.target.value;
-                this.setState({ selectedAge: e.target.value });
-                this.setState({
-                    newActivity: {
-                        ...this.state.newActivity,
-                        ageRestriction: age
-                    }
-                })
-                break;
             default:
                 break;
         }
@@ -123,15 +102,35 @@ export default class AddActivity extends Component {
     }
 
     onSelectChange = e => {
-        console.log('Location Event: ', e.target.value);
-        const location = e.target.value;
-        this.setState({ selectedLocation: location });
-        this.setState({
-            newActivity: {
-                ...this.state.newActivity,
-                location: location
-            }
-        });
+        let placeholder = e.target.attributes.placeholder.value;
+        console.log('Placeholder: ', placeholder);
+        switch(placeholder){
+            case 'Location':
+                const location = e.target.value;
+                this.setState({ selectedLocation: location });
+                this.setState({
+                    newActivity: {
+                        ...this.state.newActivity,
+                        location: location
+                    }
+                });
+            break;
+
+            case 'Age Restriction':
+                const age = e.target.value;
+                this.setState({ selectedAge: age });
+                this.setState({
+                    newActivity: {
+                        ...this.state.newActivity,
+                        ageRestriction: age
+                    }
+                })
+                break;
+            
+            default:
+                break;
+        }
+
     }
 
     render() {
@@ -171,8 +170,8 @@ export default class AddActivity extends Component {
                 />
                 
                 <AgeRestriction 
-                    restrictions={this.state}
-                    onChange={this.onInputChange}
+                    restrictions={this.state.ageLimits}
+                    onChange={this.onSelectChange}
                 />
                 
                 <input 
