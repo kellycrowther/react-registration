@@ -44,7 +44,7 @@ class App extends Component {
 
   formatTime = (date) => {
     let formattedTime = new Date(date);
-    console.log('Formatted Time: ', formattedTime);
+    // console.log('Formatted Time: ', formattedTime);
     formattedTime = formattedTime.toLocaleTimeString();
     return formattedTime;
   }
@@ -82,7 +82,7 @@ class App extends Component {
   }
 
   addActivity = prop => {
-    console.log("Add Activity Clicked!", prop);
+    // console.log("Add Activity Clicked!", prop);
     let activity = {
       activityName: prop.activityName,
       date: prop.date,
@@ -113,8 +113,8 @@ class App extends Component {
       this.setState(state);
       nextUID++;
     })
-      .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
+      .catch(error => console.error('Error:', error));
+      // .then(response => console.log('Success:', response));
   }
 
   handleDoubleClick = (index, e) => {
