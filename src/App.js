@@ -30,6 +30,7 @@ class App extends Component {
         for(let x=0; x < data.length; x++) {
           data[x].time = this.formatTime(data[x].date);
           data[x].date = this.formatDate(data[x].date);
+          data[x].day = this.getDayAsString(data[x].date);
           state.availableActivity.push(data[x]);
         };
         console.log('state after fetch: ', state);
@@ -43,6 +44,7 @@ class App extends Component {
 
   formatTime = (date) => {
     let formattedTime = new Date(date);
+    console.log('Formatted Time: ', formattedTime);
     formattedTime = formattedTime.toLocaleTimeString();
     return formattedTime;
   }
@@ -51,6 +53,22 @@ class App extends Component {
     let formattedDate = new Date(date);
     formattedDate = formattedDate.toLocaleDateString();
     return formattedDate;
+  }
+
+  getDayAsString = (date) => {
+    let formattedDate = new Date(date);
+    let daysOfWeek = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday'
+    ];
+    let index = formattedDate.getDay();
+    let day = daysOfWeek[index];
+    return day;
   }
 
   activitySelection = e => {
@@ -65,33 +83,38 @@ class App extends Component {
 
   addActivity = prop => {
     console.log("Add Activity Clicked!", prop);
-    let data = {
+    let activity = {
       activityName: prop.activityName,
       date: prop.date,
       time: prop.time,
       location: prop.location,
       ageRestriction: prop.ageRestriction,
       price: prop.price,
+      canEdit: prop.canEdit,
       uid: nextUID
     };
 
-    state.availableActivity.push(data);
+    // state.availableActivity.push(activity);
     console.log("State on App: ", state);
 
-    // fetch(API + DEFAULT_QUERY, {
-    //   method: 'POST', // or 'PUT'
-    //   body: JSON.stringify(data),
-    //   headers: new Headers({
-    //     'Content-Type': 'application/json'
-    //   })
-    // }).then(res => {
-    //   res.json();
-    //   console.log('Success:', res);
-    //   this.setState(state);
-    //   nextUID++;
-    // })
-    //   .catch(error => console.error('Error:', error))
-    //   .then(response => console.log('Success:', response));
+    this.postToDatabase(activity);
+  }
+
+  postToDatabase = (data) => {
+    fetch(API + DEFAULT_QUERY, {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(data),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    }).then(res => {
+      res.json();
+      console.log('Success:', res);
+      this.setState(state);
+      nextUID++;
+    })
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response));
   }
 
   handleDoubleClick = (index, e) => {

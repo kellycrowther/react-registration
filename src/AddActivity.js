@@ -12,7 +12,8 @@ export default class AddActivity extends Component {
             time: '',
             location: '',
             ageRestriction: '',
-            price: 0
+            price: 0,
+            canEdit: false
         },
         ageLimits: [
             '',
@@ -102,7 +103,7 @@ export default class AddActivity extends Component {
                 />
                 
                 <input 
-                    type="text" 
+                    type="number" 
                     placeholder="Price"
                     name="price"
                     value={this.state.newActivity.price}

@@ -16,7 +16,7 @@ const Registration = props => {
             />
             <p>{props.activity.activityName}</p>
             <p>{props.activity.date}</p>
-            <p>Friday</p>
+            <p>{props.activity.day}</p>
             <p>{props.activity.time}</p>
             <p>{props.activity.location}</p>
             <p>{props.activity.ageRestriction}</p>
