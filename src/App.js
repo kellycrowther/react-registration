@@ -4,6 +4,7 @@ import './App.css';
 import Registration from './Registration';
 import AddActivity from './AddActivity';
 import CartSummary from './CartSummary';
+import { Grid } from 'semantic-ui-react';
 
 const API = 'http://localhost:3111';
 const DEFAULT_QUERY = '/activities';
@@ -71,12 +72,8 @@ class App extends Component {
     return day;
   }
 
-  activitySelection = e => {
-    let myUID = parseInt(e.target.value, 10);
-    let activitySelection = state.availableActivity.find(function(activity) {
-      return activity.uid === myUID;
-    });
-    state.cart.push(activitySelection);
+  activitySelection = (data, e) => {
+    state.cart.push(data);
     console.log("Cart Selection: ", state.cart);
     this.setState(state);
   }
@@ -138,8 +135,7 @@ class App extends Component {
         index={index}
         activity={activity}
         key={activity.uid}
-        onChange={this.activitySelection}
-        onDoubleClick={(e) => this.handleDoubleClick(index, e)}
+        onClick={this.activitySelection}
       />
     ));
 
@@ -155,19 +151,11 @@ class App extends Component {
         <h1>Black Butte Ranch Recreation Registration</h1>
         <div className="app-main">
           <div className="registration">
-            <h3>Class Registration</h3>
-            <div>
-              <div className="registration-titles">
-                <h4>Select</h4>
-                <h4>Class Name</h4>
-                <h4>Date</h4>
-                <h4>Day</h4>
-                <h4>Time</h4>
-                <h4>Location</h4>
-                <h4>Age</h4>
-                <h4>Price</h4>
-              </div>
-              { registrationComponents }
+            <h3>Available Activities</h3>
+            <div> 
+              <Grid>
+                {registrationComponents}
+              </Grid>
               <AddActivity
                 addActivity={this.addActivity}
               />
