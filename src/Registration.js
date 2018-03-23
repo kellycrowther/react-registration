@@ -44,7 +44,7 @@ const Registration = props => {
         </Card.Content>
         <Button
           animated='fade'
-          onClick={(e) => this.activitySelection(props.activity, e)}
+          onClick={(e) => props.onClick(props.activity, e)}
           inverted color='green'
         >
           <Button.Content visible>
