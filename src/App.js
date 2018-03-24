@@ -13,7 +13,8 @@ const DEFAULT_QUERY = '/activities';
 const state =
   {
     availableActivity: [],
-    cart: []
+    cart: [],
+    dimmer: false
   };
 
 var nextUID; // set in componentDidMount
@@ -74,6 +75,7 @@ class App extends Component {
   }
 
   activitySelection = (data, e) => {
+    state.dimmer = !state.dimmer;
     state.cart.push(data);
     console.log("Cart Selection: ", state.cart);
     this.setState(state);
@@ -129,6 +131,11 @@ class App extends Component {
     console.log("Save Clicked", state);
   }
 
+  toggleDimmer = () => {
+    state.dimmer = !state.dimmer;
+    this.setState(state);
+  }
+
   render() {
 
     const registrationComponents = state.availableActivity.map((activity, index) => (
@@ -137,6 +144,8 @@ class App extends Component {
         activity={activity}
         key={activity.uid}
         onClick={this.activitySelection}
+        toggleDimmer={this.toggleDimmer}
+        dimmer={this.state.dimmer}
       />
     ));
 

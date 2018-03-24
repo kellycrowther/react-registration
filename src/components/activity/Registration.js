@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Icon, Image, Grid, Button } from 'semantic-ui-react';
+import { Card, Icon, Image, Grid, Button, Dimmer, Header } from 'semantic-ui-react';
 
 
 const Registration = props => {
@@ -35,7 +35,7 @@ const Registration = props => {
               Harum accusantium placeat magnam, iusto commodi aspernatur
               atque adipisci eos fuga, illum iure fugiat quos eius omnis
               ipsa magni? Ipsum, eum commodi.
-                        </p>
+            </p>
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
@@ -55,6 +55,18 @@ const Registration = props => {
           </Button.Content>
         </Button>
       </Card>
+
+      <Dimmer
+        active={props.dimmer}
+        onClickOutside={props.toggleDimmer}
+        page
+      >
+        <Header as='h2' icon inverted>
+          <Icon name='heart' />
+          Success!
+            <Header.Subheader>Your item was added to the cart!</Header.Subheader>
+        </Header>
+      </Dimmer>
     </Grid.Column>
   );
 }
