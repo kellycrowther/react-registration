@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import logo from './logo.svg';
+import logo from '../../assets/logo.svg';
 import { Link } from 'react-router-dom';
 import { Button, Icon } from 'semantic-ui-react';
 

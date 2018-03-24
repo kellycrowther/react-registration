@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import Registration from './components/activity/Registration';
-import AddActivity from './components/add-activity/AddActivity';
-import CartSummary from './components/cart/CartSummary';
+import Registration from '../activity/Registration';
+import AddActivity from '../add-activity/AddActivity';
+import CartSummary from '../cart/CartSummary';
 import { Grid } from 'semantic-ui-react';
-import Header from './Header';
+import Header from '../header/Header';
 import { Switch, Route } from 'react-router-dom'
 
 const API = 'http://localhost:3111';
