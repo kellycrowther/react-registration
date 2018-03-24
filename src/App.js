@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Registration from './Registration';
-import AddActivity from './AddActivity';
-import CartSummary from './CartSummary';
+import Registration from './components/activity/Registration';
+import AddActivity from './components/add-activity/AddActivity';
+import CartSummary from './components/cart/CartSummary';
 import { Grid } from 'semantic-ui-react';
+import Header from './Header';
+import { Switch, Route } from 'react-router-dom'
 
 const API = 'http://localhost:3111';
 const DEFAULT_QUERY = '/activities';
@@ -141,30 +142,24 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <h1>Black Butte Ranch Recreation Registration</h1>
-        <div className="app-main">
-          <div className="registration">
-            <h3>Available Activities</h3>
-            <div> 
-              <Grid>
-                {registrationComponents}
-              </Grid>
-              <AddActivity
-                addActivity={this.addActivity}
-              />
-            </div>
-          </div>
-          <CartSummary 
-            cartSelection = {state.cart}
+        <Header />
+        <Switch>
+          <Route exact path='/'>
+            <Grid>
+              {registrationComponents}
+            </Grid>
+          </Route>
+          <Route exact path='/add' render={() => (
+            <AddActivity
+              addActivity={this.addActivity}
+            /> )}
           />
-        </div>
+          <Route exact path='/cart' render={() => (
+            <CartSummary
+              cartSelection={state.cart}
+            /> )}
+          />
+        </Switch>
       </div>
     );
   }

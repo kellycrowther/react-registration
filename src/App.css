@@ -11,9 +11,9 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
   padding: 20px;
-  /* color: white; */
+  color: white;
+  margin-bottom: 2%;
 }
 
 .App-title {
@@ -29,9 +29,20 @@
   /* color: white; */
 }
 
+.main-nav ul > li {
+  list-style-type: none;
+}
+
+.main-nav ul {
+  display: flex;
+}
+
+.main-nav ul li {
+  flex: 1;
+}
+
 .registration {
-  width: 75%;
-  padding-bottom: 50px;
+  margin-top: 50px;
 }
 
 .cartSummary {
