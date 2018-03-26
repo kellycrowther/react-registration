@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-const CartActivity = props => {
+const CartActivity = (props: any) => {
     return (
         <div>
             <p>{props.activity.activityName}</p>

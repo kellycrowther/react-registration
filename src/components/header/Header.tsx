@@ -1,13 +1,12 @@
-import React from 'react';
-// import PropTypes from 'prop-types';
-import logo from '../../assets/logo.svg';
+import * as React from 'react';
+// import logo from '../../assets/logo.svg';
 import { Link } from 'react-router-dom';
 import { Button, Icon } from 'semantic-ui-react';
 
 const Header = () => {
   return (
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src='' className="App-logo" alt="logo" />
         <h1 className="App-title">Black Butte Ranch Recreation Registration</h1>
         <nav className='main-nav'>
           <ul>
@@ -32,9 +31,6 @@ const Header = () => {
         </nav>
       </header>
   );
-};
-
-Header.propTypes = {
 };
 
 export default Header;

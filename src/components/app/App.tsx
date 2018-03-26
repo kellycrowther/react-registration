@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 import './App.css';
 import Registration from '../activity/Registration';
 import AddActivity from '../add-activity/AddActivity';
 import CartSummary from '../cart/CartSummary';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Button, Icon } from 'semantic-ui-react';
 import Header from '../header/Header';
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom';
 
 const API = 'http://localhost:3111';
 const DEFAULT_QUERY = '/activities';
@@ -17,12 +18,12 @@ const state =
     dimmer: false
   };
 
-var nextUID; // set in componentDidMount
+var nextUID: number; // set in componentDidMount
 
 class App extends Component {
 
 
-  componentDidMount = () => {
+  componentDidMount() {
     // should i be calling setState? Or better way?
     // better way to set state then looping through?
     console.log('componentDidMount()~');
@@ -45,20 +46,22 @@ class App extends Component {
       });
   }
 
-  formatTime = (date) => {
-    let formattedTime = new Date(date);
+  formatTime(date: any) {
+    let formattedTime: any;
+    formattedTime = new Date(date);
     // console.log('Formatted Time: ', formattedTime);
     formattedTime = formattedTime.toLocaleTimeString();
     return formattedTime;
   }
 
-  formatDate = (date) => {
-    let formattedDate = new Date(date);
+  formatDate(date: any) {
+    let formattedDate: any;
+    formattedDate = new Date(date);
     formattedDate = formattedDate.toLocaleDateString();
     return formattedDate;
   }
 
-  getDayAsString = (date) => {
+  getDayAsString = (date: any) => {
     let formattedDate = new Date(date);
     let daysOfWeek = [
       'Sunday',
@@ -74,14 +77,14 @@ class App extends Component {
     return day;
   }
 
-  activitySelection = (data, e) => {
+  activitySelection(data: any, e: Event) {
     state.dimmer = !state.dimmer;
     state.cart.push(data);
     console.log("Cart Selection: ", state.cart);
     this.setState(state);
   }
 
-  addActivity = prop => {
+  addActivity(prop: any) {
     // console.log("Add Activity Clicked!", prop);
     let activity = {
       activityName: prop.activityName,
@@ -100,7 +103,7 @@ class App extends Component {
     this.postToDatabase(activity);
   }
 
-  postToDatabase = (data) => {
+  postToDatabase (data: any) {
     fetch(API + DEFAULT_QUERY, {
       method: 'POST', // or 'PUT'
       body: JSON.stringify(data),
@@ -117,7 +120,7 @@ class App extends Component {
       // .then(response => console.log('Success:', response));
   }
 
-  handleDoubleClick = (index, e) => {
+  handleDoubleClick(index: number, e: Event) {
     console.log("Double Click Fired", index);
 
     state.availableActivity[index].canEdit = !state.availableActivity[index].canEdit;
@@ -127,11 +130,11 @@ class App extends Component {
     // console.log("Can Edit State: ", )
   }
 
-  handleSave = state => {
+  handleSave(state: Object) {
     console.log("Save Clicked", state);
   }
 
-  toggleDimmer = () => {
+  toggleDimmer() {
     state.dimmer = !state.dimmer;
     this.setState(state);
   }
@@ -145,7 +148,7 @@ class App extends Component {
         key={activity.uid}
         onClick={this.activitySelection}
         toggleDimmer={this.toggleDimmer}
-        dimmer={this.state.dimmer}
+        // dimmer={this.state.dimmer}
       />
     ));
 
@@ -169,6 +172,17 @@ class App extends Component {
             /> )}
           />
         </Switch>
+        <Button
+          animated='fade'
+          inverted color='green'
+        >
+          <Button.Content visible>
+            Add To Cart
+            </Button.Content>
+          <Button.Content hidden>
+            <Icon name='cart' />
+          </Button.Content>
+        </Button> 
       </div>
     );
   }

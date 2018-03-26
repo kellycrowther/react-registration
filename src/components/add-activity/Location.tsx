@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+// import * as PropTypes from 'prop-types';
 
-const Location = (props) => {
+const Location = (props: any) => {
   return (
     <div>
       <select
         onChange={props.onChange}
-        placeholder="Location"
+        // placeholder="Location"
         name="location"
       >
-        {props.locations.map((location, index) => {
+        {props.locations.map((location: string, index: number) => {
           return (
             <option
               key={index}
@@ -24,8 +24,8 @@ const Location = (props) => {
   );
 };
 
-Location.propTypes = {
-  locations: PropTypes.arrayOf(PropTypes.string).isRequired
-};
+// Location.propTypes = {
+//   locations: PropTypes.arrayOf(PropTypes.string).isRequired
+// };
 
 export default Location;

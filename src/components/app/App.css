@@ -1,7 +1,5 @@
 .App {
   text-align: center;
-  /* background-image: url('./assets/bbr-background.jpg');
-  background-size: cover; */
 }
 
 .App-logo {
@@ -26,7 +24,6 @@
 
 .app-main {
   display: flex;
-  /* color: white; */
 }
 
 .main-nav ul > li {
@@ -67,9 +64,7 @@
 }
 
 .add-activity {
-  /* color: white; */
   background-color: rgba(0, 0, 0, 0.3); 
-  /* display: flex; */
 }
 
 .registration-titles {

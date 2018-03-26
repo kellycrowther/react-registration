@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
+// import * as PropTypes from 'prop-types';
 import AgeRestriction from './AgeRestriction';
 import Location from './Location';
 
-export default class AddActivity extends Component {
+export default class AddActivity extends Component<any, any> {
 
   state = {
     newActivity: {
@@ -31,7 +32,7 @@ export default class AddActivity extends Component {
   };
 
   // e.target.name === state.newActivity.activityName/date/time
-  onInputChange = (e) => {
+  onInputChange = (e: any) => {
     // console.log('My Event: ', e.target);
     const value = e.target.value;
     this.setState({
@@ -42,7 +43,7 @@ export default class AddActivity extends Component {
     });
   }
 
-  onSubmit = e => {
+  onSubmit = (e: any) => {
     if (e) e.preventDefault();
     // console.log('My Activity Added', this.state.activityName);
     this.props.addActivity(this.state.newActivity);
@@ -115,7 +116,7 @@ export default class AddActivity extends Component {
   };
 }
 
-AddActivity.propTypes = {
-  // onNameChange: PropTypes.func.isRequired,
-  // onSubmit: PropTypes.func.isRequired
-}
+// AddActivity.propTypes = {
+//   onNameChange: PropTypes.func.isRequired,
+//   onSubmit: PropTypes.func.isRequired
+// }

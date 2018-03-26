@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 
 import CartActivity from './CartActivity';
 
-export default class CartSummary extends Component {
+export default class CartSummary extends Component<any, any> {
     render() {
-        const cartActivityComponents = this.props.cartSelection.map((activity, index) => {
+        const cartActivityComponents = this.props.cartSelection.map((activity: string, index: number) => {
             return <CartActivity 
                 activity={activity}
                 key={index}
@@ -13,7 +14,7 @@ export default class CartSummary extends Component {
 
         // console.log("Cart Summary: ", this.props.cartSelection);
         let myTotal = 0; 
-        this.props.cartSelection.map((price, index) => {
+        this.props.cartSelection.map((price: any, index:number) => {
             // console.log(price.price);
             return myTotal = myTotal + price.price;
         });
