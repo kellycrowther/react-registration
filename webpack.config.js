@@ -1,19 +1,15 @@
-
+var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
-  entry: [
-    "./src/index.tsx",
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server'
-  ],
+  entry: "./src/index.tsx",
   output: {
-    filename: "bundle.js",
-    path: __dirname + "/dist",
-    publicPath: 'http://localhost:3000/',
+    path: path.resolve(__dirname, "./src/public/js"),
+    filename: "bundle.js"
   },
 
   // Enable sourcemaps for debugging webpack's output.
-  devtool: "source-map",
+  devtool: 'inline-source-map',
 
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
@@ -21,6 +17,17 @@ module.exports = {
   },
 
   mode: "development",
+
+  devServer: {
+    // publicPath: "/",
+    contentBase: "./src/public",
+    compress: true,
+    port: 3000,
+    open: true,
+    hot: true,
+    watchContentBase: true,
+    inline: true
+  },
 
   module: {
     rules: [
@@ -37,19 +44,28 @@ module.exports = {
         loader: 'url-loader?limit=10000&mimetype=application/fontwoff'
       },
       // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+      { test: /\.tsx?$/, loaders: ["react-hot", "awesome-typescript-loader"], exclude: /node_modules/ },
 
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+      // { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]
   },
+
+  watchOptions: {
+    poll: true
+  }
 
   // When importing a module whose path matches one of the following, just
   // assume a corresponding global variable exists and use that instead.
   // This is important because it allows us to avoid bundling all of our
   // dependencies, which allows browsers to cache those libraries between builds.
-  externals: {
-    "react": "React",
-    "react-dom": "ReactDOM"
-  },
+  // externals: {
+  //   "react": "React",
+  //   "react-dom": "ReactDOM"
+  // },
+  // plugins: [
+  //   new webpack.ProvidePlugin({
+  //     "React": "react",
+  //   }),
+  // ]
 };

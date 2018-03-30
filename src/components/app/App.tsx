@@ -11,7 +11,7 @@ import { Switch, Route } from 'react-router-dom';
 const API = 'http://localhost:3111';
 const DEFAULT_QUERY = '/activities';
 
-const state =
+const state: any =
   {
     availableActivity: [],
     cart: [],
@@ -141,7 +141,7 @@ class App extends Component {
 
   render() {
 
-    const registrationComponents = state.availableActivity.map((activity, index) => (
+    const registrationComponents = state.availableActivity.map((activity: any, index: any) => (
       <Registration
         index={index}
         activity={activity}
@@ -172,17 +172,6 @@ class App extends Component {
             /> )}
           />
         </Switch>
-        <Button
-          animated='fade'
-          inverted color='green'
-        >
-          <Button.Content visible>
-            Add To Cart
-            </Button.Content>
-          <Button.Content hidden>
-            <Icon name='cart' />
-          </Button.Content>
-        </Button> 
       </div>
     );
   }

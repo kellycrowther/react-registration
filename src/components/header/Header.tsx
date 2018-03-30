@@ -15,6 +15,11 @@ const Header = () => {
                 <Button inverted color='blue'>Home</Button>
               </Link>
             </li>
+          <li>
+            <Link to='/'>
+              <Button inverted color='green'>My Button</Button>
+            </Link>
+          </li>
             <li>
               <Link to='/cart'>
                 <Button inverted color='blue'>

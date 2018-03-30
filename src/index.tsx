@@ -7,6 +7,13 @@ import 'semantic-ui-css/semantic.min.css';
 // import "semantic-ui-less/semantic.less";
 import { BrowserRouter } from 'react-router-dom';
 
+// ReactDOM.render(
+//   <div>
+//     <h1>Hello, Welcome to the first page</h1>
+//   </div>,
+//   document.getElementById("root")
+// )
+
 ReactDOM.render((
   <BrowserRouter>
     <App />

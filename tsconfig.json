@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "module": "ESNext",
+    "module": "es6",
     "moduleResolution": "node",
     "outDir": "./dist/",
     "sourceMap": true,
     "noImplicitAny": true,
     "target": "es5",
-    "jsx": "react"
+    "jsx": "react",
+    "allowJs": true
   },
   "exclude": [
     "node_modules"
