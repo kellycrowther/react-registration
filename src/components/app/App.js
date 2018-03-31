@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Registration from '../activity/Registration';
+import Activity from '../activity/Activity';
 import AddActivity from '../add-activity/AddActivity';
 import CartSummary from '../cart/CartSummary';
 import { Grid } from 'semantic-ui-react';
@@ -138,8 +138,8 @@ class App extends Component {
 
   render() {
 
-    const registrationComponents = state.availableActivity.map((activity, index) => (
-      <Registration
+    const activityComponents = state.availableActivity.map((activity, index) => (
+      <Activity
         index={index}
         activity={activity}
         key={activity.uid}
@@ -155,7 +155,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/'>
             <Grid>
-              {registrationComponents}
+              { activityComponents }
             </Grid>
           </Route>
           <Route exact path='/add' render={() => (

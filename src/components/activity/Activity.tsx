@@ -1,9 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { Card, Icon, Image, Grid, Button, Dimmer, Header } from 'semantic-ui-react';
 
-
-const Registration = props => {
+const Activity = (props: any) => {
 
   return (
     <Grid.Column mobile={16} tablet={8} computer={8}>
@@ -45,7 +43,8 @@ const Registration = props => {
         <Button
           animated='fade'
           onClick={(e) => props.onClick(props.activity, e)}
-          inverted color='green'
+          inverted
+          color='green'
         >
           <Button.Content visible>
             Add To Cart
@@ -69,18 +68,18 @@ const Registration = props => {
       </Dimmer>
     </Grid.Column>
   );
-}
+};
 
-Registration.propTypes = {
-  activity: PropTypes.shape({
-    activityName: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-    time: PropTypes.string.isRequired,
-    location: PropTypes.string.isRequired,
-    ageRestriction: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    uid: PropTypes.number.isRequired
-  })
-}
+// Registration.propTypes = {
+//   activity: PropTypes.shape({
+//     activityName: PropTypes.string.isRequired,
+//     date: PropTypes.string.isRequired,
+//     time: PropTypes.string.isRequired,
+//     location: PropTypes.string.isRequired,
+//     ageRestriction: PropTypes.string.isRequired,
+//     price: PropTypes.number.isRequired,
+//     uid: PropTypes.number.isRequired
+//   })
+// }
 
-export default Registration;
+export default Activity;
