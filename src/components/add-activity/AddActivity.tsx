@@ -2,6 +2,14 @@ import * as React from 'react';
 import { Component } from 'react';
 import AgeRestriction from './AgeRestriction';
 import Location from './Location';
+// import { ActivityI } from '../../models/activity';
+
+// interface State {
+//   newActivity: ActivityI;
+//   ageLimits: string[];
+//   selectedAge: string;
+//   locations: string[];
+// }
 
 export default class AddActivity extends Component<any, any> {
 

@@ -6,4 +6,5 @@ export interface ActivityI {
   ageRestriction: string;
   price: number;
   uid: number;
+  canEdit?: boolean;
 }
