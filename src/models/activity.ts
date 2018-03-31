@@ -1,4 +1,4 @@
-export interface Activity {
+export interface ActivityI {
   activityName: string;
   date: string;
   time: string;

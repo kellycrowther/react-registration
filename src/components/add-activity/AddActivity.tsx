@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
 import AgeRestriction from './AgeRestriction';
 import Location from './Location';
 
-export default class AddActivity extends Component {
+export default class AddActivity extends Component<any, any> {
 
   state = {
     newActivity: {
@@ -31,7 +31,7 @@ export default class AddActivity extends Component {
   };
 
   // e.target.name === state.newActivity.activityName/date/time
-  onInputChange = (e) => {
+  onInputChange = (e: any) => {
     // console.log('My Event: ', e.target);
     const value = e.target.value;
     this.setState({
@@ -42,8 +42,10 @@ export default class AddActivity extends Component {
     });
   }
 
-  onSubmit = e => {
-    if (e) e.preventDefault();
+  onSubmit = (e: any) => {
+    if (e) {
+      e.preventDefault();
+    } 
     // console.log('My Activity Added', this.state.activityName);
     this.props.addActivity(this.state.newActivity);
     this.setState({
@@ -63,31 +65,31 @@ export default class AddActivity extends Component {
     return (
       <form
         onSubmit={this.onSubmit}
-        className="activities"
+        className='activities'
       >
-        <input type="submit" value="Add Activity" />
+        <input type='submit' value='Add Activity' />
         <input
-          type="text"
-          placeholder="Class Name"
-          name="activityName"
+          type='text'
+          placeholder='Class Name'
+          name='activityName'
           value={this.state.newActivity.activityName}
           onChange={this.onInputChange}
         />
 
         <input
-          type="date"
-          placeholder="Enter Date"
-          name="date"
+          type='date'
+          placeholder='Enter Date'
+          name='date'
           value={this.state.newActivity.date}
           onChange={this.onInputChange}
         />
 
-        <div></div> {/* empty placeholder alignment*/}
+        <div /> {/* empty placeholder alignment*/}
 
         <input
-          type="time"
-          placeholder="Enter Time"
-          name="time"
+          type='time'
+          placeholder='Enter Time'
+          name='time'
           value={this.state.newActivity.time}
           onChange={this.onInputChange}
         />
@@ -103,19 +105,14 @@ export default class AddActivity extends Component {
         />
 
         <input
-          type="number"
-          placeholder="Price"
-          name="price"
+          type='number'
+          placeholder='Price'
+          name='price'
           value={this.state.newActivity.price}
           onChange={this.onInputChange}
         />
 
       </form>
     );
-  };
-}
-
-AddActivity.propTypes = {
-  // onNameChange: PropTypes.func.isRequired,
-  // onSubmit: PropTypes.func.isRequired
+  }
 }

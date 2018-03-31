@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card, Icon, Image, Grid, Button, Dimmer, Header } from 'semantic-ui-react';
+import { Card, Icon, Image, Grid, Button } from 'semantic-ui-react';
 
 const Activity = (props: any) => {
 
@@ -54,18 +54,6 @@ const Activity = (props: any) => {
           </Button.Content>
         </Button>
       </Card>
-
-      <Dimmer
-        active={props.dimmer}
-        onClickOutside={props.toggleDimmer}
-        page
-      >
-        <Header as='h2' icon inverted>
-          <Icon name='heart' />
-          Success!
-            <Header.Subheader>Your item was added to the cart!</Header.Subheader>
-        </Header>
-      </Dimmer>
     </Grid.Column>
   );
 };

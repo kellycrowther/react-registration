@@ -1,41 +1,49 @@
-import React, { Component } from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 import './App.css';
 import Activity from '../activity/Activity';
 import AddActivity from '../add-activity/AddActivity';
 import CartSummary from '../cart/CartSummary';
 import { Grid } from 'semantic-ui-react';
 import Header from '../header/Header';
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom';
+import { ActivityI } from '../../models/activity';
 
 const API = 'http://localhost:3111';
 const DEFAULT_QUERY = '/activities';
 
-const state =
-  {
+interface State {
+  availableActivity: Array<AvailableActivity>;
+  cart: Array<Object>;
+}
+
+interface AvailableActivity extends ActivityI {
+  canEdit: boolean;
+}
+
+const state: State = {
     availableActivity: [],
     cart: [],
-    dimmer: false
   };
 
-var nextUID; // set in componentDidMount
+var nextUID: number; // set in componentDidMount
 
 class App extends Component {
 
-
-  componentDidMount = () => {
+  componentDidMount () {
     // should i be calling setState? Or better way?
     // better way to set state then looping through?
     console.log('componentDidMount()~');
     fetch(API + DEFAULT_QUERY)
       .then(response => response.json())
-      .then(data => {
+      .then((data) => {
         console.log('data from local api: ', data);
-        for(let x=0; x < data.length; x++) {
+        for (let x = 0; x < data.length; x++) {
           data[x].time = this.formatTime(data[x].date);
           data[x].date = this.formatDate(data[x].date);
           data[x].day = this.getDayAsString(data[x].date);
           state.availableActivity.push(data[x]);
-        };
+        }
         console.log('state after fetch: ', state);
         nextUID = (data.length + 1);
         this.setState(state);
@@ -45,20 +53,22 @@ class App extends Component {
       });
   }
 
-  formatTime = (date) => {
-    let formattedTime = new Date(date);
+  formatTime (date: Date) {
+    let formattedTime: any;
+    formattedTime = new Date(date);
     // console.log('Formatted Time: ', formattedTime);
     formattedTime = formattedTime.toLocaleTimeString();
     return formattedTime;
   }
 
-  formatDate = (date) => {
-    let formattedDate = new Date(date);
+  formatDate (date: Date) {
+    let formattedDate: any;
+    formattedDate = new Date(date);
     formattedDate = formattedDate.toLocaleDateString();
     return formattedDate;
   }
 
-  getDayAsString = (date) => {
+  getDayAsString (date: Date) {
     let formattedDate = new Date(date);
     let daysOfWeek = [
       'Sunday',
@@ -74,15 +84,14 @@ class App extends Component {
     return day;
   }
 
-  activitySelection = (data, e) => {
-    state.dimmer = !state.dimmer;
+  activitySelection (data: any, e: any) {
     state.cart.push(data);
-    console.log("Cart Selection: ", state.cart);
+    console.log('Cart Selection: ', state.cart);
     this.setState(state);
   }
 
-  addActivity = prop => {
-    // console.log("Add Activity Clicked!", prop);
+  public addActivity (prop: any) {
+    // console.log('Add Activity Clicked!', prop);
     let activity = {
       activityName: prop.activityName,
       date: prop.date,
@@ -95,12 +104,12 @@ class App extends Component {
     };
 
     // state.availableActivity.push(activity);
-    console.log("State on App: ", state);
+    console.log('State on App: ', state);
 
     this.postToDatabase(activity);
   }
 
-  postToDatabase = (data) => {
+  postToDatabase (data: any)  {
     fetch(API + DEFAULT_QUERY, {
       method: 'POST', // or 'PUT'
       body: JSON.stringify(data),
@@ -117,23 +126,14 @@ class App extends Component {
       // .then(response => console.log('Success:', response));
   }
 
-  handleDoubleClick = (index, e) => {
-    console.log("Double Click Fired", index);
+  handleDoubleClick(index: number, e: any) {
+    console.log('Double Click Fired', index);
 
     state.availableActivity[index].canEdit = !state.availableActivity[index].canEdit;
 
     this.setState(state);
 
-    // console.log("Can Edit State: ", )
-  }
-
-  handleSave = state => {
-    console.log("Save Clicked", state);
-  }
-
-  toggleDimmer = () => {
-    state.dimmer = !state.dimmer;
-    this.setState(state);
+    // console.log('Can Edit State: ', )
   }
 
   render() {
@@ -144,26 +144,30 @@ class App extends Component {
         activity={activity}
         key={activity.uid}
         onClick={this.activitySelection}
-        toggleDimmer={this.toggleDimmer}
-        dimmer={this.state.dimmer}
       />
     ));
 
     return (
-      <div className="App">
+      <div className='App'>
         <Header />
         <Switch>
           <Route exact path='/'>
             <Grid>
-              { activityComponents }
+              {activityComponents}
             </Grid>
           </Route>
-          <Route exact path='/add' render={() => (
+          <Route 
+            exact
+            path='/add' 
+            render={() => (
             <AddActivity
               addActivity={this.addActivity}
             /> )}
           />
-          <Route exact path='/cart' render={() => (
+          <Route 
+            exact
+            path='/cart'
+            render={() => (
             <CartSummary
               cartSelection={state.cart}
             /> )}
