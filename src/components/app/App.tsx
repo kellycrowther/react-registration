@@ -90,7 +90,7 @@ class App extends Component {
     this.setState(state);
   }
 
-  public addActivity (prop: any) {
+  addActivity = (prop: any) => {
     // console.log('Add Activity Clicked!', prop);
     let activity = {
       activityName: prop.activityName,
@@ -109,7 +109,7 @@ class App extends Component {
     this.postToDatabase(activity);
   }
 
-  postToDatabase (data: any)  {
+  public postToDatabase (data: any) {
     fetch(API + DEFAULT_QUERY, {
       method: 'POST', // or 'PUT'
       body: JSON.stringify(data),
@@ -126,16 +126,6 @@ class App extends Component {
       // .then(response => console.log('Success:', response));
   }
 
-  handleDoubleClick(index: number, e: any) {
-    console.log('Double Click Fired', index);
-
-    state.availableActivity[index].canEdit = !state.availableActivity[index].canEdit;
-
-    this.setState(state);
-
-    // console.log('Can Edit State: ', )
-  }
-
   render() {
 
     const activityComponents = state.availableActivity.map((activity, index) => (
@@ -150,29 +140,29 @@ class App extends Component {
     return (
       <div className='App'>
         <Header />
-        <Switch>
-          <Route exact path='/'>
-            <Grid>
-              {activityComponents}
-            </Grid>
-          </Route>
-          <Route 
-            exact
-            path='/add' 
-            render={() => (
-            <AddActivity
-              addActivity={this.addActivity}
-            /> )}
-          />
-          <Route 
-            exact
-            path='/cart'
-            render={() => (
-            <CartSummary
-              cartSelection={state.cart}
-            /> )}
-          />
-        </Switch>
+          <Switch>
+            <Route exact path='/'>
+              <Grid>
+                {activityComponents}
+              </Grid>
+            </Route>
+            <Route 
+              exact
+              path='/add' 
+              render={() => (
+              <AddActivity
+                addActivity={this.addActivity}
+              /> )}
+            />
+            <Route 
+              exact
+              path='/cart'
+              render={() => (
+              <CartSummary
+                cartSelection={state.cart}
+              /> )}
+            />
+          </Switch>
       </div>
     );
   }

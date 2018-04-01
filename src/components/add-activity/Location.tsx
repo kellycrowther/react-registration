@@ -1,12 +1,14 @@
 import * as React from 'react';
+import { Form } from 'semantic-ui-react';
 
 const Location = (props: any) => {
   return (
-    <div>
-      <select
-        onChange={props.onChange}
-        name='location'
-      >
+    <Form.Field 
+      label='Location'
+      control='select' 
+      onChange={props.onChange} 
+      name='location'
+    >
         {props.locations.map((location: string, index: number) => {
           return (
             <option
@@ -17,8 +19,7 @@ const Location = (props: any) => {
             </option>
           );
         })}
-      </select>
-    </div>
+    </Form.Field>
   );
 };
 

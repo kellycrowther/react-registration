@@ -21,7 +21,8 @@ const Header = () => {
                 <Icon name='cart' />
                 Cart
                 </Button>
-            </Link></li>
+            </Link>
+          </li>
           <li>
             <Link to='/add'>
               <Button inverted color='blue'>Add Activity</Button>

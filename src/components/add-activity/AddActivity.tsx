@@ -3,6 +3,7 @@ import { Component } from 'react';
 import AgeRestriction from './AgeRestriction';
 import Location from './Location';
 // import { ActivityI } from '../../models/activity';
+import { Form } from 'semantic-ui-react';
 
 // interface State {
 //   newActivity: ActivityI;
@@ -38,9 +39,9 @@ export default class AddActivity extends Component<any, any> {
     ]
   };
 
-  // e.target.name === state.newActivity.activityName/date/time
+  // target.name must eqaul state.newActivity.activityName/date/time
   onInputChange = (e: any) => {
-    // console.log('My Event: ', e.target);
+    // console.log('My Event: ', e.target.value);
     const value = e.target.value;
     this.setState({
       newActivity: {
@@ -53,8 +54,8 @@ export default class AddActivity extends Component<any, any> {
   onSubmit = (e: any) => {
     if (e) {
       e.preventDefault();
-    } 
-    // console.log('My Activity Added', this.state.activityName);
+    }
+    // console.log('My Activity Added', this.state);
     this.props.addActivity(this.state.newActivity);
     this.setState({
       newActivity: {
@@ -71,56 +72,53 @@ export default class AddActivity extends Component<any, any> {
   render() {
 
     return (
-      <form
-        onSubmit={this.onSubmit}
-        className='activities'
-      >
-        <input type='submit' value='Add Activity' />
-        <input
-          type='text'
-          placeholder='Class Name'
-          name='activityName'
-          value={this.state.newActivity.activityName}
-          onChange={this.onInputChange}
-        />
+        <Form onSubmit={this.onSubmit}>
+          <Form.Group widths='equal'>
+            <Form.Input 
+              fluid 
+              label='Activity Name'
+              name='activityName'
+              placeholder='Activity Name' 
+              onChange={this.onInputChange}
+            />
+            
+            <Location
+              locations={this.state.locations}
+              onChange={this.onInputChange}
+            />
 
-        <input
-          type='date'
-          placeholder='Enter Date'
-          name='date'
-          value={this.state.newActivity.date}
-          onChange={this.onInputChange}
-        />
+            <AgeRestriction
+              restrictions={this.state.ageLimits}
+              onChange={this.onInputChange}
+            />
 
-        <div /> {/* empty placeholder alignment*/}
+            <Form.Input
+              label='Choose Date'
+              type='date'
+              name='date'
+              value={this.state.newActivity.date}
+              onChange={this.onInputChange}
+            />
 
-        <input
-          type='time'
-          placeholder='Enter Time'
-          name='time'
-          value={this.state.newActivity.time}
-          onChange={this.onInputChange}
-        />
+            <Form.Input 
+              label='Choose Time'
+              type='time'
+              name='time'
+              value={this.state.newActivity.time}
+              onChange={this.onInputChange}
+            />
 
-        <Location
-          locations={this.state.locations}
-          onChange={this.onInputChange}
-        />
+            <Form.Input
+              label='Price' 
+              type='number'
+              name='price'
+              value={this.state.newActivity.price}
+              onChange={this.onInputChange}
+            />
 
-        <AgeRestriction
-          restrictions={this.state.ageLimits}
-          onChange={this.onInputChange}
-        />
-
-        <input
-          type='number'
-          placeholder='Price'
-          name='price'
-          value={this.state.newActivity.price}
-          onChange={this.onInputChange}
-        />
-
-      </form>
+            <Form.Button>Submit</Form.Button>
+          </Form.Group>
+        </Form>
     );
   }
 }
