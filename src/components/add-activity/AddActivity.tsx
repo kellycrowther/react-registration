@@ -2,8 +2,11 @@ import * as React from 'react';
 import { Component } from 'react';
 import AgeRestriction from './AgeRestriction';
 import Location from './Location';
+import './AddActivity.css';
 // import { ActivityI } from '../../models/activity';
-import { Form } from 'semantic-ui-react';
+import { Form, Checkbox } from 'semantic-ui-react';
+import SingleDate from './SingleDate';
+import MultipleDate from './MultipleDate';
 
 // interface State {
 //   newActivity: ActivityI;
@@ -36,7 +39,8 @@ export default class AddActivity extends Component<any, any> {
       '',
       'Lakeside',
       'GMRC'
-    ]
+    ],
+    multipleDates: false
   };
 
   // target.name must eqaul state.newActivity.activityName/date/time
@@ -48,6 +52,13 @@ export default class AddActivity extends Component<any, any> {
         ...this.state.newActivity,
         [e.target.name]: value
       }
+    });
+  }
+
+  onToggle = (e: any) => {
+    let value = !this.state.multipleDates;
+    this.setState({
+      multipleDates: value
     });
   }
 
@@ -72,7 +83,7 @@ export default class AddActivity extends Component<any, any> {
   render() {
 
     return (
-        <Form onSubmit={this.onSubmit}>
+        <Form onSubmit={this.onSubmit} className='add-activity-form'>
           <Form.Group widths='equal'>
             <Form.Input 
               fluid 
@@ -93,22 +104,6 @@ export default class AddActivity extends Component<any, any> {
             />
 
             <Form.Input
-              label='Choose Date'
-              type='date'
-              name='date'
-              value={this.state.newActivity.date}
-              onChange={this.onInputChange}
-            />
-
-            <Form.Input 
-              label='Choose Time'
-              type='time'
-              name='time'
-              value={this.state.newActivity.time}
-              onChange={this.onInputChange}
-            />
-
-            <Form.Input
               label='Price' 
               type='number'
               name='price'
@@ -118,6 +113,26 @@ export default class AddActivity extends Component<any, any> {
 
             <Form.Button>Submit</Form.Button>
           </Form.Group>
+
+          <Checkbox
+            toggle
+            onChange={this.onToggle}
+          />
+
+          {
+            this.state.multipleDates ? 
+
+            <MultipleDate
+              onChange={this.onInputChange}
+            />
+
+            :
+
+            <SingleDate
+              onChange={this.onInputChange}
+            />
+          }
+
         </Form>
     );
   }

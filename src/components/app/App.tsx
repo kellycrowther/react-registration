@@ -103,10 +103,12 @@ class App extends Component {
       uid: nextUID
     };
 
+    console.log(activity);
+
     // state.availableActivity.push(activity);
     console.log('State on App: ', state);
 
-    this.postToDatabase(activity);
+    // this.postToDatabase(activity);
   }
 
   public postToDatabase (data: any) {
