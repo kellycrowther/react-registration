@@ -7,6 +7,7 @@ import './AddActivity.css';
 import { Form, Checkbox } from 'semantic-ui-react';
 import SingleDate from './SingleDate';
 import MultipleDate from './MultipleDate';
+import Category from './Category';
 
 // interface State {
 //   newActivity: ActivityI;
@@ -25,7 +26,8 @@ export default class AddActivity extends Component<any, any> {
       location: '',
       ageRestriction: '',
       price: 0,
-      canEdit: false
+      canEdit: false,
+      categories: []
     },
     ageLimits: [
       '',
@@ -40,7 +42,13 @@ export default class AddActivity extends Component<any, any> {
       'Lakeside',
       'GMRC'
     ],
-    multipleDates: false
+    multipleDates: false,
+    categories: [
+      'Uncategorized',
+      'Indoor Class',
+      'Outdoor Class',
+      'Indoor Instruction'
+    ]
   };
 
   // target.name must eqaul state.newActivity.activityName/date/time
@@ -114,9 +122,15 @@ export default class AddActivity extends Component<any, any> {
             <Form.Button>Submit</Form.Button>
           </Form.Group>
 
+          <Category 
+            categories={this.state.categories}
+            onChange={this.onInputChange}
+          />
+
           <Checkbox
             toggle
             onChange={this.onToggle}
+            label='Multiple Dates'
           />
 
           {
