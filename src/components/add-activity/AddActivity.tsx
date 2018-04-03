@@ -4,9 +4,8 @@ import AgeRestriction from './AgeRestriction';
 import Location from './Location';
 import './AddActivity.css';
 // import { ActivityI } from '../../models/activity';
-import { Form, Checkbox } from 'semantic-ui-react';
-import SingleDate from './SingleDate';
-import MultipleDate from './MultipleDate';
+import { Form } from 'semantic-ui-react';
+import DatePicker from './DatePicker';
 import Category from './Category';
 
 // interface State {
@@ -27,7 +26,8 @@ export default class AddActivity extends Component<any, any> {
       ageRestriction: '',
       price: 0,
       canEdit: false,
-      categories: []
+      categories: [],
+      dateTimes: []
     },
     ageLimits: [
       '',
@@ -42,7 +42,6 @@ export default class AddActivity extends Component<any, any> {
       'Lakeside',
       'GMRC'
     ],
-    multipleDates: false,
     categories: [
       'Uncategorized',
       'Indoor Class',
@@ -63,10 +62,12 @@ export default class AddActivity extends Component<any, any> {
     });
   }
 
-  onToggle = (e: any) => {
-    let value = !this.state.multipleDates;
+  getDateTime = (dateTime: any) => {
     this.setState({
-      multipleDates: value
+      newActivity: {
+        ...this.state.newActivity,
+        dateTimes: dateTime
+      }
     });
   }
 
@@ -74,8 +75,8 @@ export default class AddActivity extends Component<any, any> {
     if (e) {
       e.preventDefault();
     }
-    // console.log('My Activity Added', this.state);
-    this.props.addActivity(this.state.newActivity);
+    console.log('My Activity Added', this.state);
+    // this.props.addActivity(this.state.newActivity);
     this.setState({
       newActivity: {
         activityName: '',
@@ -83,7 +84,9 @@ export default class AddActivity extends Component<any, any> {
         time: '',
         location: '',
         ageRestriction: '',
-        price: 0
+        price: 0,
+        categories: [],
+        dateTimes: []
       }
     });
   }
@@ -127,25 +130,9 @@ export default class AddActivity extends Component<any, any> {
             onChange={this.onInputChange}
           />
 
-          <Checkbox
-            toggle
-            onChange={this.onToggle}
-            label='Multiple Dates'
+          <DatePicker
+            getDateTime={this.getDateTime}
           />
-
-          {
-            this.state.multipleDates ? 
-
-            <MultipleDate
-              onChange={this.onInputChange}
-            />
-
-            :
-
-            <SingleDate
-              onChange={this.onInputChange}
-            />
-          }
 
         </Form>
     );
