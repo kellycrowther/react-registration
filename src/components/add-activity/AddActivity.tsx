@@ -15,13 +15,14 @@ import Category from './Category';
 //   locations: string[];
 // }
 
+const API = 'http://localhost:3111';
+const DEFAULT_QUERY = '/activities';
+
 export default class AddActivity extends Component<any, any> {
 
   state = {
     newActivity: {
       activityName: '',
-      date: '',
-      time: '',
       location: '',
       ageRestriction: '',
       price: 0,
@@ -50,6 +51,39 @@ export default class AddActivity extends Component<any, any> {
     ]
   };
 
+  onSubmit = (e: any) => {
+    if (e) {
+      e.preventDefault();
+    }
+    console.log('My Activity Added', this.state);
+    let activity = {
+      activityName: this.state.newActivity.activityName,
+      location: this.state.newActivity.location,
+      ageRestriction: this.state.newActivity.ageRestriction,
+      price: this.state.newActivity.price,
+      canEdit: this.state.newActivity.canEdit,
+      categories: this.state.newActivity.categories,
+      dateTimes: this.state.newActivity.dateTimes
+    };
+
+    this.addActivity(activity);
+    this.resetState();
+  }
+
+  public addActivity(data: any) {
+    fetch(API + DEFAULT_QUERY, {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(data),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    }).then(res => {
+      res.json();
+      console.log('Success:', res);
+    })
+      .catch(error => console.error('Error:', error));
+  }
+
   // target.name must eqaul state.newActivity.activityName/date/time
   onInputChange = (e: any) => {
     // console.log('My Event: ', e.target.value);
@@ -71,12 +105,7 @@ export default class AddActivity extends Component<any, any> {
     });
   }
 
-  onSubmit = (e: any) => {
-    if (e) {
-      e.preventDefault();
-    }
-    console.log('My Activity Added', this.state);
-    // this.props.addActivity(this.state.newActivity);
+  resetState = () => {
     this.setState({
       newActivity: {
         activityName: '',

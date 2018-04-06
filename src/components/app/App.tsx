@@ -26,12 +26,9 @@ const state: State = {
     cart: [],
   };
 
-var nextUID: number; // set in componentDidMount
-
 class App extends Component {
 
   componentDidMount () {
-    // should i be calling setState? Or better way?
     // better way to set state then looping through?
     console.log('componentDidMount()~');
     fetch(API + DEFAULT_QUERY)
@@ -45,7 +42,6 @@ class App extends Component {
           state.availableActivity.push(data[x]);
         }
         console.log('state after fetch: ', state);
-        nextUID = (data.length + 1);
         this.setState(state);
       })
       .catch((err) => {
@@ -56,7 +52,6 @@ class App extends Component {
   formatTime (date: Date) {
     let formattedTime: any;
     formattedTime = new Date(date);
-    // console.log('Formatted Time: ', formattedTime);
     formattedTime = formattedTime.toLocaleTimeString();
     return formattedTime;
   }
@@ -90,44 +85,6 @@ class App extends Component {
     this.setState(state);
   }
 
-  addActivity = (prop: any) => {
-    // console.log('Add Activity Clicked!', prop);
-    let activity = {
-      activityName: prop.activityName,
-      date: prop.date,
-      time: prop.time,
-      location: prop.location,
-      ageRestriction: prop.ageRestriction,
-      price: prop.price,
-      canEdit: prop.canEdit,
-      uid: nextUID
-    };
-
-    console.log(activity);
-
-    // state.availableActivity.push(activity);
-    console.log('State on App: ', state);
-
-    // this.postToDatabase(activity);
-  }
-
-  public postToDatabase (data: any) {
-    fetch(API + DEFAULT_QUERY, {
-      method: 'POST', // or 'PUT'
-      body: JSON.stringify(data),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    }).then(res => {
-      res.json();
-      console.log('Success:', res);
-      this.setState(state);
-      nextUID++;
-    })
-      .catch(error => console.error('Error:', error));
-      // .then(response => console.log('Success:', response));
-  }
-
   render() {
 
     const activityComponents = state.availableActivity.map((activity, index) => (
@@ -152,9 +109,8 @@ class App extends Component {
               exact
               path='/add' 
               render={() => (
-              <AddActivity
-                addActivity={this.addActivity}
-              /> )}
+              <AddActivity /> 
+            )}
             />
             <Route 
               exact
