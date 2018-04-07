@@ -91,7 +91,7 @@ class App extends Component {
       <Activity
         index={index}
         activity={activity}
-        key={activity.uid}
+        key={activity.activity_id}
         onClick={this.activitySelection}
       />
     ));

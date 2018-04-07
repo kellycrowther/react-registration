@@ -43,9 +43,17 @@ export default class DatePicker extends Component<any, any> {
           label='Choose Time'
           type='time'
           name='time'
-          width={6}
+          width={4}
           // value={this.state.newActivity.time}
           onChange={this.createDateTime}
+        />
+
+        <Form.Input
+          label='Quantity Avaiable On These Dates'
+          type='number'
+          name='quantity'
+          width={4}
+          onChange={this.props.onChange}
         />
       </Form.Group>
     );

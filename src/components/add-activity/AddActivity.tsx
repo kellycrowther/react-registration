@@ -27,8 +27,9 @@ export default class AddActivity extends Component<any, any> {
       ageRestriction: '',
       price: 0,
       canEdit: false,
-      categories: [],
-      dateTimes: []
+      category: '',
+      dateTimes: [],
+      quantity: 0
     },
     ageLimits: [
       '',
@@ -44,10 +45,15 @@ export default class AddActivity extends Component<any, any> {
       'GMRC'
     ],
     categories: [
-      'Uncategorized',
-      'Indoor Class',
-      'Outdoor Class',
-      'Indoor Instruction'
+      '',
+      'Indoor Activities',
+      'Outdoor Activities',
+      'Outdoor Instruction',
+      'Bike Rentals',
+      'Boat Rentals',
+      'Exercise Classes',
+      'Swimming',
+      'Tennis'
     ]
   };
 
@@ -62,8 +68,9 @@ export default class AddActivity extends Component<any, any> {
       ageRestriction: this.state.newActivity.ageRestriction,
       price: this.state.newActivity.price,
       canEdit: this.state.newActivity.canEdit,
-      categories: this.state.newActivity.categories,
-      dateTimes: this.state.newActivity.dateTimes
+      category: this.state.newActivity.category,
+      dateTimes: this.state.newActivity.dateTimes,
+      quantity: this.state.newActivity.quantity
     };
 
     this.addActivity(activity);
@@ -143,6 +150,11 @@ export default class AddActivity extends Component<any, any> {
               onChange={this.onInputChange}
             />
 
+            <Category
+              categories={this.state.categories}
+              onChange={this.onInputChange}
+            />
+
             <Form.Input
               label='Price' 
               type='number'
@@ -154,13 +166,9 @@ export default class AddActivity extends Component<any, any> {
             <Form.Button>Submit</Form.Button>
           </Form.Group>
 
-          <Category 
-            categories={this.state.categories}
-            onChange={this.onInputChange}
-          />
-
           <DatePicker
             getDateTime={this.getDateTime}
+            onChange={this.onInputChange}
           />
 
         </Form>
