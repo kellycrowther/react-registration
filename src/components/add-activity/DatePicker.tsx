@@ -40,7 +40,7 @@ export default class DatePicker extends Component<any, any> {
         />
 
         <Form.Input
-          label='Choose Time'
+          label='Start Time'
           type='time'
           name='time'
           width={4}

@@ -36,8 +36,6 @@ class App extends Component {
       .then((data) => {
         console.log('data from local api: ', data);
         for (let x = 0; x < data.length; x++) {
-          data[x].time = this.formatTime(data[x].date);
-          data[x].date = this.formatDate(data[x].date);
           data[x].day = this.getDayAsString(data[x].date);
           state.availableActivity.push(data[x]);
         }
@@ -47,20 +45,6 @@ class App extends Component {
       .catch((err) => {
         console.log('error getting data', err);
       });
-  }
-
-  formatTime (date: Date) {
-    let formattedTime: any;
-    formattedTime = new Date(date);
-    formattedTime = formattedTime.toLocaleTimeString();
-    return formattedTime;
-  }
-
-  formatDate (date: Date) {
-    let formattedDate: any;
-    formattedDate = new Date(date);
-    formattedDate = formattedDate.toLocaleDateString();
-    return formattedDate;
   }
 
   getDayAsString (date: Date) {
@@ -91,7 +75,7 @@ class App extends Component {
       <Activity
         index={index}
         activity={activity}
-        key={activity.activity_id}
+        key={activity.date_id}
         onClick={this.activitySelection}
       />
     ));
