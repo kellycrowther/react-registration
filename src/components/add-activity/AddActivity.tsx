@@ -3,7 +3,7 @@ import { Component } from 'react';
 import AgeRestriction from './AgeRestriction';
 import Location from './Location';
 import './AddActivity.css';
-import { Form } from 'semantic-ui-react';
+import { Form, Button, Icon } from 'semantic-ui-react';
 import DatePicker from './DatePicker';
 import Category from './Category';
 import { DateTimeInterface } from '../../models/DateTimeInterface';
@@ -14,7 +14,7 @@ interface StateInterface {
   selectedAge: string;
   locations: string[];
   categories: string[];
-  dateComponent: string[];
+  dateComponent: number;
 }
 
 interface NewActivityInterface {
@@ -68,10 +68,8 @@ export default class AddActivity extends Component<any, any> {
       'Swimming',
       'Tennis'
     ],
-    dateComponent: [
-      'test',
-      'test2'
-    ]
+    // dateComponent data is just used to create additional components
+    dateComponent: 1
   };
 
   onSubmit = (e: any) => {
@@ -139,6 +137,13 @@ export default class AddActivity extends Component<any, any> {
     console.log(this.state.newActivity.dateTimes);
   }
 
+  addDatePickerComponent = () => {
+    console.log('addDatePickerComponent');
+    this.setState({
+      dateComponent: this.state.dateComponent + 1
+    });
+  }
+
   resetState = () => {
     this.setState({
       newActivity: {
@@ -156,14 +161,29 @@ export default class AddActivity extends Component<any, any> {
 
   render() {
 
-    const datePickerComponents = this.state.dateComponent.map((datePicker, index) => (
-      <DatePicker
-        getDateTime={this.getDateTime}
-        onChange={this.onInputChange}
-        key={index}
-        index={index}
-      />
-    ));
+    const datePickerComponents = [];
+
+    for (var i = 0; i < this.state.dateComponent; i += 1) {
+      datePickerComponents.push(
+        <DatePicker
+          getDateTime={this.getDateTime}
+          onChange={this.onInputChange}
+          addDatePickerComponent={this.addDatePickerComponent}
+          key={i}
+          index={i}
+        />
+      );
+    }
+
+    // const datePickerComponents = this.state.dateComponent.map((datePicker, index) => (
+    //   <DatePicker
+    //     getDateTime={this.getDateTime}
+    //     onChange={this.onInputChange}
+    //     addDatePickerComponent={this.addDatePickerComponent}
+    //     key={index}
+    //     index={index}
+    //   />
+    // ));
 
     return (
         <Form onSubmit={this.onSubmit} className='add-activity-form'>
@@ -201,8 +221,19 @@ export default class AddActivity extends Component<any, any> {
 
           </Form.Group>
 
-          {datePickerComponents}
-    
+            <Button
+              icon
+              inverted
+              color='green'
+              type='button'
+              onClick={this.addDatePickerComponent}
+            >
+              <Icon name='plus' />
+              Add New Date/Time
+            </Button>
+
+            {datePickerComponents}
+
           <Form.Button>Submit</Form.Button>
 
         </Form>

@@ -20,6 +20,7 @@ export default class DatePicker extends Component<any, any> {
   render() {
     return (
       <Form.Group>
+
         <Form.Input
           label='Start Date'
           type='date'
