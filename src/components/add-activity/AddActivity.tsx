@@ -3,24 +3,37 @@ import { Component } from 'react';
 import AgeRestriction from './AgeRestriction';
 import Location from './Location';
 import './AddActivity.css';
-// import { ActivityI } from '../../models/activity';
 import { Form } from 'semantic-ui-react';
 import DatePicker from './DatePicker';
 import Category from './Category';
+import { DateTimeInterface } from '../../models/DateTimeInterface';
 
-// interface State {
-//   newActivity: ActivityI;
-//   ageLimits: string[];
-//   selectedAge: string;
-//   locations: string[];
-// }
+interface StateInterface {
+  newActivity: NewActivityInterface;
+  ageLimits: string[];
+  selectedAge: string;
+  locations: string[];
+  categories: string[];
+  dateComponent: string[];
+}
+
+interface NewActivityInterface {
+  activityName: string;
+  location: string;
+  ageRestriction: string;
+  price: number;
+  canEdit: boolean;
+  category: string;
+  dateTimes: Array<DateTimeInterface>;
+  quantity: number;
+}
 
 const API = 'http://localhost:3111';
 const DEFAULT_QUERY = '/activities';
 
 export default class AddActivity extends Component<any, any> {
 
-  state = {
+  state: StateInterface = {
     newActivity: {
       activityName: '',
       location: '',
@@ -54,6 +67,10 @@ export default class AddActivity extends Component<any, any> {
       'Exercise Classes',
       'Swimming',
       'Tennis'
+    ],
+    dateComponent: [
+      'test',
+      'test2'
     ]
   };
 
@@ -103,13 +120,23 @@ export default class AddActivity extends Component<any, any> {
     });
   }
 
-  getDateTime = (dateTime: any) => {
-    this.setState({
-      newActivity: {
-        ...this.state.newActivity,
-        dateTimes: dateTime
-      }
-    });
+  getDateTime = (dateTime: any, name: string, value: string) => {
+    var data = this.state.newActivity.dateTimes;
+    let index = dateTime.index;
+    // return object in state that has equivalent index key of dateTime parameter
+    const result = data.find((group: any) => group.index === index);
+
+    // if can't find index key, push this object into state
+    if (result === undefined) {
+      data.push(dateTime);
+    // if can find index key, update the found object with new object
+    // and add back to state leaving other objects un-mutated
+    } else {
+      var newArray = data.slice();
+      newArray.push(dateTime);
+      this.setState({ data: newArray });
+    }
+    console.log(this.state.newActivity.dateTimes);
   }
 
   resetState = () => {
@@ -128,6 +155,15 @@ export default class AddActivity extends Component<any, any> {
   }
 
   render() {
+
+    const datePickerComponents = this.state.dateComponent.map((datePicker, index) => (
+      <DatePicker
+        getDateTime={this.getDateTime}
+        onChange={this.onInputChange}
+        key={index}
+        index={index}
+      />
+    ));
 
     return (
         <Form onSubmit={this.onSubmit} className='add-activity-form'>
@@ -163,13 +199,11 @@ export default class AddActivity extends Component<any, any> {
               onChange={this.onInputChange}
             />
 
-            <Form.Button>Submit</Form.Button>
           </Form.Group>
 
-          <DatePicker
-            getDateTime={this.getDateTime}
-            onChange={this.onInputChange}
-          />
+          {datePickerComponents}
+    
+          <Form.Button>Submit</Form.Button>
 
         </Form>
     );

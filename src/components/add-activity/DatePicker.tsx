@@ -1,21 +1,20 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Form } from 'semantic-ui-react';
-
-interface DateTimeInterface {
-  startDate: string;
-  endDate: string;
-  time: string;
-}
-let dateTime: DateTimeInterface = { startDate: '', endDate: '', time: '' };
+import { DateTimeInterface } from '../../models/DateTimeInterface';
 
 export default class DatePicker extends Component<any, any> {
+
+  dateTime: DateTimeInterface = { startDate: '', endDate: '', time: '', index: 0 };
 
   // setState here instead? Getting errors using it
   createDateTime = (e: any) => {
     const value = e.target.value;
-    dateTime[e.target.name] = value;
-    this.props.getDateTime(dateTime);
+    const name = e.target.name;
+    const index = this.props.index;
+    this.dateTime[name] = value;
+    this.dateTime.index = index;
+    this.props.getDateTime(this.dateTime);
   }
 
   render() {
@@ -49,7 +48,7 @@ export default class DatePicker extends Component<any, any> {
         />
 
         <Form.Input
-          label='Quantity Avaiable On These Dates'
+          label='Quantity Available On These Dates'
           type='number'
           name='quantity'
           width={4}
