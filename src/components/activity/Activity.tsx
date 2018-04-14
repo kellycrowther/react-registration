@@ -58,16 +58,4 @@ const Activity = (props: any) => {
   );
 };
 
-// Registration.propTypes = {
-//   activity: PropTypes.shape({
-//     activityName: PropTypes.string.isRequired,
-//     date: PropTypes.string.isRequired,
-//     time: PropTypes.string.isRequired,
-//     location: PropTypes.string.isRequired,
-//     ageRestriction: PropTypes.string.isRequired,
-//     price: PropTypes.number.isRequired,
-//     uid: PropTypes.number.isRequired
-//   })
-// }
-
 export default Activity;

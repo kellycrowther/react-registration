@@ -4,7 +4,7 @@ import './App.css';
 import Activity from '../activity/Activity';
 import AddActivity from '../add-activity/AddActivity';
 import CartSummary from '../cart/CartSummary';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Dimmer, Loader, Icon, Transition } from 'semantic-ui-react';
 import Header from '../header/Header';
 import { Switch, Route } from 'react-router-dom';
 import { ActivityI } from '../../models/activity';
@@ -15,18 +15,26 @@ const DEFAULT_QUERY = '/activities';
 interface State {
   availableActivity: Array<AvailableActivity>;
   cart: Array<Object>;
+  active: boolean;
+  hide: number;
+  show: number;
+  visible: boolean;
 }
 
 interface AvailableActivity extends ActivityI {
   canEdit: boolean;
 }
 
-const state: State = {
+class App extends Component<any, any> {
+
+  state: State = {
     availableActivity: [],
     cart: [],
+    active: false,
+    hide: 2500,
+    show: 0,
+    visible: false
   };
-
-class App extends Component {
 
   componentDidMount () {
     // better way to set state then looping through?
@@ -37,10 +45,10 @@ class App extends Component {
         console.log('data from local api: ', data);
         for (let x = 0; x < data.length; x++) {
           data[x].day = this.getDayAsString(data[x].date);
-          state.availableActivity.push(data[x]);
+          this.state.availableActivity.push(data[x]);
         }
-        console.log('state after fetch: ', state);
-        this.setState(state);
+        console.log('state after fetch: ', this.state);
+        this.setState(this.state);
       })
       .catch((err) => {
         console.log('error getting data', err);
@@ -64,14 +72,24 @@ class App extends Component {
   }
 
   activitySelection (data: any, e: any) {
-    state.cart.push(data);
-    console.log('Cart Selection: ', state.cart);
-    this.setState(state);
+    this.state.cart.push(data);
+    console.log('Cart Selection: ', this.state.cart);
+    this.setState(this.state);
+  }
+
+  toggleDimmer = () => {
+    this.setState({ active: !this.state.active });
+  }
+
+  toggleSuccess = () => {
+    this.setState({ visible: !this.state.visible });
   }
 
   render() {
 
-    const activityComponents = state.availableActivity.map((activity, index) => (
+    const { hide, show } = this.state;
+
+    const activityComponents = this.state.availableActivity.map((activity, index) => (
       <Activity
         index={index}
         activity={activity}
@@ -93,7 +111,10 @@ class App extends Component {
               exact
               path='/add' 
               render={() => (
-              <AddActivity /> 
+              <AddActivity 
+                toggleDimmer={this.toggleDimmer}
+                toggleSuccess={this.toggleSuccess}
+              /> 
             )}
             />
             <Route 
@@ -101,10 +122,28 @@ class App extends Component {
               path='/cart'
               render={() => (
               <CartSummary
-                cartSelection={state.cart}
+                cartSelection={this.state.cart}
               /> )}
             />
           </Switch>
+
+        <Dimmer active={this.state.active}>
+          <Loader>Processing</Loader>
+        </Dimmer>
+
+        <Transition 
+          duration={{ hide, show }}
+          visible={this.state.visible}
+        >
+          <Dimmer>
+            <Icon
+              name='checkmark box'
+              size='huge'
+              color='green'
+              className='processing-complete'
+            />
+          </Dimmer>
+        </Transition>
       </div>
     );
   }

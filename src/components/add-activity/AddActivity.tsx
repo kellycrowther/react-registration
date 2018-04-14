@@ -66,7 +66,8 @@ export default class AddActivity extends Component<any, any> {
       category: this.state.newActivity.category,
       availability: this.state.newActivity.availability,
     };
-
+    
+    this.props.toggleDimmer();
     this.addActivity(activity);
     this.resetState(e);
   }
@@ -81,8 +82,13 @@ export default class AddActivity extends Component<any, any> {
     }).then(res => {
       res.json();
       console.log('Success:', res);
+      this.props.toggleSuccess();
     })
-      .catch(error => console.error('Error:', error));
+      .catch(error => console.error('Error:', error))
+      .then(() => { 
+        this.props.toggleDimmer(); 
+        this.props.toggleSuccess();
+      });
   }
 
   // target.name must eqaul state.newActivity.activityName/date/time
