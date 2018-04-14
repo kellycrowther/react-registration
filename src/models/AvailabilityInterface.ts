@@ -4,4 +4,5 @@ export interface AvailabilityInterface {
   time: string;
   index: number;
   quantity: number;
+  includedWeekdays: Array<any>;
 }
