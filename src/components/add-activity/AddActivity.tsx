@@ -6,7 +6,7 @@ import './AddActivity.css';
 import { Form, Button, Icon } from 'semantic-ui-react';
 import DatePicker from './DatePicker';
 import Category from './Category';
-import { DateTimeInterface } from '../../models/DateTimeInterface';
+import { AvailabilityInterface } from '../../models/AvailabilityInterface';
 
 interface StateInterface {
   newActivity: NewActivityInterface;
@@ -24,8 +24,7 @@ interface NewActivityInterface {
   price: number;
   canEdit: boolean;
   category: string;
-  dateTimes: Array<DateTimeInterface>;
-  quantity: number;
+  availability: Array<AvailabilityInterface>;
 }
 
 const API = 'http://localhost:3111';
@@ -41,8 +40,7 @@ export default class AddActivity extends Component<any, any> {
       price: 0,
       canEdit: false,
       category: '',
-      dateTimes: [],
-      quantity: 0
+      availability: []
     },
     ageLimits: [
       '',
@@ -84,8 +82,7 @@ export default class AddActivity extends Component<any, any> {
       price: this.state.newActivity.price,
       canEdit: this.state.newActivity.canEdit,
       category: this.state.newActivity.category,
-      dateTimes: this.state.newActivity.dateTimes,
-      quantity: this.state.newActivity.quantity
+      availability: this.state.newActivity.availability,
     };
 
     this.addActivity(activity);
@@ -118,23 +115,23 @@ export default class AddActivity extends Component<any, any> {
     });
   }
 
-  getDateTime = (dateTime: any, name: string, value: string) => {
-    var data = this.state.newActivity.dateTimes;
-    let index = dateTime.index;
-    // return object in state that has equivalent index key of dateTime parameter
+  getDateTime = (availability: AvailabilityInterface, name: string, value: string) => {
+    var data = this.state.newActivity.availability;
+    let index = availability.index;
+    // return object in state that has equivalent index key of availability parameter
     const result = data.find((group: any) => group.index === index);
 
     // if can't find index key, push this object into state
     if (result === undefined) {
-      data.push(dateTime);
+      data.push(availability);
     // if can find index key, update the found object with new object
     // and add back to state leaving other objects un-mutated
     } else {
       var newArray = data.slice();
-      newArray.push(dateTime);
+      newArray.push(availability);
       this.setState({ data: newArray });
     }
-    console.log(this.state.newActivity.dateTimes);
+    console.log(this.state.newActivity.availability);
   }
 
   addDatePickerComponent = () => {
@@ -174,16 +171,6 @@ export default class AddActivity extends Component<any, any> {
         />
       );
     }
-
-    // const datePickerComponents = this.state.dateComponent.map((datePicker, index) => (
-    //   <DatePicker
-    //     getDateTime={this.getDateTime}
-    //     onChange={this.onInputChange}
-    //     addDatePickerComponent={this.addDatePickerComponent}
-    //     key={index}
-    //     index={index}
-    //   />
-    // ));
 
     return (
         <Form onSubmit={this.onSubmit} className='add-activity-form'>

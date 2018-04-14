@@ -1,20 +1,26 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Form } from 'semantic-ui-react';
-import { DateTimeInterface } from '../../models/DateTimeInterface';
+import { AvailabilityInterface } from '../../models/AvailabilityInterface';
 
 export default class DatePicker extends Component<any, any> {
 
-  dateTime: DateTimeInterface = { startDate: '', endDate: '', time: '', index: 0 };
+  state: AvailabilityInterface = { 
+    startDate: '',
+    endDate: '',
+    time: '',
+    index: 0,
+    quantity: 0
+  };
 
   // setState here instead? Getting errors using it
   createDateTime = (e: any) => {
     const value = e.target.value;
     const name = e.target.name;
     const index = this.props.index;
-    this.dateTime[name] = value;
-    this.dateTime.index = index;
-    this.props.getDateTime(this.dateTime);
+    this.state[name] = value;
+    this.state.index = index;
+    this.props.getDateTime(this.state);
   }
 
   render() {
@@ -26,7 +32,6 @@ export default class DatePicker extends Component<any, any> {
           type='date'
           name='startDate'
           width={6}
-          // value={this.state.newActivity.date}
           onChange={this.createDateTime}
         />
 
@@ -35,7 +40,6 @@ export default class DatePicker extends Component<any, any> {
           type='date'
           name='endDate'
           width={6}
-          // value={this.state.newActivity.date}
           onChange={this.createDateTime}
         />
 
@@ -44,7 +48,6 @@ export default class DatePicker extends Component<any, any> {
           type='time'
           name='time'
           width={4}
-          // value={this.state.newActivity.time}
           onChange={this.createDateTime}
         />
 
@@ -53,7 +56,7 @@ export default class DatePicker extends Component<any, any> {
           type='number'
           name='quantity'
           width={4}
-          onChange={this.props.onChange}
+          onChange={this.createDateTime}
         />
       </Form.Group>
     );
