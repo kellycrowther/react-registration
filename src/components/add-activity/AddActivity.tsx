@@ -7,32 +7,14 @@ import { Form, Button, Icon } from 'semantic-ui-react';
 import DatePicker from './DatePicker';
 import Category from './Category';
 import { AvailabilityInterface } from '../../models/AvailabilityInterface';
-
-interface StateInterface {
-  newActivity: NewActivityInterface;
-  ageLimits: string[];
-  selectedAge: string;
-  locations: string[];
-  categories: string[];
-  dateComponent: number;
-}
-
-interface NewActivityInterface {
-  activityName: string;
-  location: string;
-  ageRestriction: string;
-  price: number;
-  canEdit: boolean;
-  category: string;
-  availability: Array<AvailabilityInterface>;
-}
+import { AddActivityInterface } from '../../models/AddActivityInterface';
 
 const API = 'http://localhost:3111';
 const DEFAULT_QUERY = '/activities';
 
 export default class AddActivity extends Component<any, any> {
 
-  state: StateInterface = {
+  state: AddActivityInterface = {
     newActivity: {
       activityName: '',
       location: '',
@@ -70,7 +52,7 @@ export default class AddActivity extends Component<any, any> {
     dateComponent: 1
   };
 
-  onSubmit = (e: any) => {
+  onSubmit = (e: React.FormEvent<any>) => {
     if (e) {
       e.preventDefault();
     }
@@ -86,7 +68,7 @@ export default class AddActivity extends Component<any, any> {
     };
 
     this.addActivity(activity);
-    this.resetState();
+    this.resetState(e);
   }
 
   public addActivity(data: any) {
@@ -104,7 +86,7 @@ export default class AddActivity extends Component<any, any> {
   }
 
   // target.name must eqaul state.newActivity.activityName/date/time
-  onInputChange = (e: any) => {
+  onInputChange = (e: React.ChangeEvent<any>) => {
     // console.log('My Event: ', e.target.value);
     const value = e.target.value;
     this.setState({
@@ -141,7 +123,8 @@ export default class AddActivity extends Component<any, any> {
     });
   }
 
-  resetState = () => {
+  resetState = (e: React.ChangeEvent<any>) => {
+    e.target.reset();
     this.setState({
       newActivity: {
         activityName: '',
