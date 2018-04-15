@@ -103,11 +103,11 @@ export default class AddActivity extends Component<any, any> {
     });
   }
 
-  getDateTime = (availability: AvailabilityInterface, name: string, value: string) => {
-    var data = this.state.newActivity.availability;
+  getDateTime = (availability: AvailabilityInterface) => {
+    let data = this.state.newActivity.availability;
     let index = availability.index;
     // return object in state that has equivalent index key of availability parameter
-    const result = data.find((group: any) => group.index === index);
+    let result = data.find((group: any) => group.index === index);
 
     // if can't find index key, push this object into state
     if (result === undefined) {
@@ -134,13 +134,12 @@ export default class AddActivity extends Component<any, any> {
     this.setState({
       newActivity: {
         activityName: '',
-        date: '',
-        time: '',
         location: '',
         ageRestriction: '',
         price: 0,
-        categories: [],
-        dateTimes: []
+        canEdit: false,
+        category: '',
+        availability: []
       }
     });
   }
