@@ -6,6 +6,7 @@ import AddActivity from '../add-activity/AddActivity';
 import CartSummary from '../cart/CartSummary';
 import { Grid, Dimmer, Loader, Icon, Transition } from 'semantic-ui-react';
 import Header from '../header/Header';
+import Filter from '../filter/Filter';
 import { Switch, Route } from 'react-router-dom';
 import { ActivityI } from '../../models/activity';
 
@@ -23,7 +24,15 @@ interface State {
 
 interface AvailableActivity extends ActivityI {
   canEdit: boolean;
+  category: string;
 }
+
+  const filterOptions: any = [
+    { key: 1, text: 'Outdoor Activities' },
+    { key: 2, text: 'Boat Rentals' },
+    { key: 3, text: 'Indoor Activities'},
+    { key: 4, text: 'All' }
+  ];
 
 class App extends Component<any, any> {
 
@@ -35,6 +44,8 @@ class App extends Component<any, any> {
     show: 0,
     visible: false
   };
+
+  initialActivities: Array<AvailableActivity>;
 
   componentDidMount () {
     // better way to set state then looping through?
@@ -49,6 +60,7 @@ class App extends Component<any, any> {
         }
         console.log('state after fetch: ', this.state);
         this.setState(this.state);
+        this.initialActivities = this.state.availableActivity;
       })
       .catch((err) => {
         console.log('error getting data', err);
@@ -85,6 +97,18 @@ class App extends Component<any, any> {
     this.setState({ visible: !this.state.visible });
   }
 
+  filterValue = (e: any) => {
+    console.log('filterValue: ', e.target.textContent);
+    let categoryFilter = e.target.textContent;
+    if (categoryFilter === 'All') {
+      this.setState({ availableActivity: this.initialActivities });
+    } else {
+      console.log(this.initialActivities);
+      let filteredArray = this.initialActivities.filter(activity => activity.category === categoryFilter);
+      this.setState({ availableActivity: filteredArray });
+    }
+  }
+
   render() {
 
     const { hide, show } = this.state;
@@ -103,9 +127,18 @@ class App extends Component<any, any> {
         <Header />
           <Switch>
             <Route exact path='/'>
+            <div>
+              <div className='my-filter'>
+                <Filter
+                  filterOptions={filterOptions}
+                  onChange={this.filterValue}
+                  className='my-filter'
+                />
+              </div>
               <Grid>
                 {activityComponents}
               </Grid>
+            </div>
             </Route>
             <Route 
               exact

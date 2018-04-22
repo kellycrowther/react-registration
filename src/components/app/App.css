@@ -103,6 +103,12 @@
   padding-top: 300px;
 }
 
+.my-filter {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 20px;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

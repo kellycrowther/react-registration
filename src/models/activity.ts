@@ -1,7 +1,6 @@
 export interface ActivityI {
   activityName: string;
   date: string;
-  date_time: Date;
   time: string;
   location: string;
   ageRestriction: string;
@@ -9,4 +8,7 @@ export interface ActivityI {
   activity_id: number;
   date_id: number;
   canEdit?: boolean;
+  category: string;
+  day: string;
+  quantity: number;
 }
