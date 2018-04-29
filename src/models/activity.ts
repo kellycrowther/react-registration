@@ -11,4 +11,5 @@ export interface ActivityI {
   category: string;
   day: string;
   quantity: number;
+  date_time: Date;
 }

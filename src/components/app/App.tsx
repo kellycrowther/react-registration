@@ -9,6 +9,7 @@ import Header from '../header/Header';
 import Filter from '../filter/Filter';
 import { Switch, Route } from 'react-router-dom';
 import { ActivityI } from '../../models/activity';
+import FilterDate  from '../filter-date/FilterDate';
 
 const API = 'http://localhost:3111';
 const DEFAULT_QUERY = '/activities';
@@ -31,7 +32,21 @@ interface AvailableActivity extends ActivityI {
     { key: 1, text: 'Outdoor Activities' },
     { key: 2, text: 'Boat Rentals' },
     { key: 3, text: 'Indoor Activities'},
-    { key: 4, text: 'All' }
+    { key: 4, text: 'Outdoor Instruction' },
+    { key: 5, text: 'Bike Rentals' },
+    { key: 6, text: 'Boat Rentals' },
+    { key: 7, text: 'Exercise Classes' },
+    { key: 8, text: 'Swimming' },
+    { key: 9, text: 'Tennis' },
+    { key: 10, text: 'All' }
+  ];
+
+  const dateFilterOptions: any = [
+    { key: 1, text: 'All' },
+    { key: 2, text: 'Today' },
+    { key: 3, text: 'Tomorrow' },
+    { key: 4, text: 'Upcoming Week' },
+    { key: 5, text: 'Upcoming Month' }
   ];
 
 class App extends Component<any, any> {
@@ -98,14 +113,58 @@ class App extends Component<any, any> {
   }
 
   filterValue = (e: any) => {
-    console.log('filterValue: ', e.target.textContent);
     let categoryFilter = e.target.textContent;
     if (categoryFilter === 'All') {
       this.setState({ availableActivity: this.initialActivities });
     } else {
-      console.log(this.initialActivities);
       let filteredArray = this.initialActivities.filter(activity => activity.category === categoryFilter);
       this.setState({ availableActivity: filteredArray });
+    }
+  }
+
+  sortDate = (e: any) => {
+    console.log('sortDate: ', e.target.textContent);
+    let dateFilter = e.target.textContent;
+    let todaysDate = new Date();
+    let oneDay = 86400000; // in milliseconds
+    let filteredArray: Array<AvailableActivity>;
+    switch (dateFilter) {
+      case 'All':
+        this.setState({ availableActivity: this.initialActivities });
+        break;
+      case 'Today':
+        filteredArray = this.initialActivities.filter(activity => {
+          let activityDate: any = new Date(activity.date_time).toLocaleDateString();
+          return activityDate === todaysDate.toLocaleDateString();
+        });
+        this.setState({ availableActivity: filteredArray });
+        break;
+      case 'Tomorrow':
+        let tomorrow = new Date(todaysDate.getTime() + oneDay).toLocaleDateString();
+        filteredArray = this.initialActivities.filter(activity => {
+          let activityDate: any = new Date(activity.date_time).toLocaleDateString();
+          return activityDate === tomorrow;
+        });
+        this.setState({ availableActivity: filteredArray });
+        break;
+      case 'Upcoming Week':
+        let upcomingWeek = new Date(todaysDate.getTime() + (oneDay * 7));
+        filteredArray = this.initialActivities.filter(activity => {
+          let activityDate: any = new Date(activity.date_time);
+          return activityDate <= upcomingWeek && activityDate >= todaysDate.getTime();
+        });
+        this.setState({ availableActivity: filteredArray });
+        break;
+      case 'Upcoming Month':
+        let upcomingMonth = new Date(todaysDate.getTime() + (oneDay * 31));
+        filteredArray = this.initialActivities.filter(activity => {
+          let activityDate: any = new Date(activity.date_time);
+          return activityDate <= upcomingMonth && activityDate >= todaysDate.getTime();
+        });
+        this.setState({ availableActivity: filteredArray });
+        break;
+      default:
+        break;
     }
   }
 
@@ -129,10 +188,13 @@ class App extends Component<any, any> {
             <Route exact path='/'>
             <div>
               <div className='my-filter'>
+                <FilterDate 
+                  dateFilterOptions={dateFilterOptions}
+                  onChange={this.sortDate}
+                />
                 <Filter
                   filterOptions={filterOptions}
                   onChange={this.filterValue}
-                  className='my-filter'
                 />
               </div>
               <Grid>
