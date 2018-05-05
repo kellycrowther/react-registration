@@ -5,7 +5,7 @@ import { Form, Button, Grid, Message, Segment, Header } from 'semantic-ui-react'
 import { LoginInterface } from '../../models/LoginInterface';
 
 const API = 'http://localhost:3111';
-const DEFAULT_QUERY = '/activities';
+const DEFAULT_QUERY = '/login';
 
 export default class Login extends Component<any, any> {
 
@@ -18,18 +18,14 @@ export default class Login extends Component<any, any> {
     if (e) {
       e.preventDefault();
     }
-    console.log('My Activity Added', this.state);
-    let user: LoginInterface = {
-      email: '',
-      password: ''
-    };
+    console.log('User Info', this.state);
 
-    this.props.toggleDimmer();
-    this.login(user);
+    this.login(this.state);
     this.resetState(e);
   }
 
   public login(data: LoginInterface) {
+    console.log('data: ', data);
     fetch(API + DEFAULT_QUERY, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -37,10 +33,12 @@ export default class Login extends Component<any, any> {
         'Content-Type': 'application/json'
       })
     }).then(res => {
-      res.json();
-      console.log('Success:', res);
-      this.props.toggleSuccess();
-    })
+      res.json()
+        .then(payload => {
+        console.log('Response:', res);
+        console.log('payload: ', payload);
+        });
+      })
       .catch(error => {
         console.error('Error:', error);
       });
@@ -76,13 +74,15 @@ export default class Login extends Component<any, any> {
             <Header as='h2' color='teal' textAlign='center'>
               {' '}Log-in to your account
         </Header>
-            <Form size='large'>
+            <Form size='large' onSubmit={this.onSubmit}>
               <Segment stacked>
                 <Form.Input
                   fluid
                   icon='user'
                   iconPosition='left'
                   placeholder='E-mail address'
+                  name='email'
+                  onChange={this.onInputChange}
                 />
                 <Form.Input
                   fluid
@@ -90,6 +90,8 @@ export default class Login extends Component<any, any> {
                   iconPosition='left'
                   placeholder='Password'
                   type='password'
+                  name='password'
+                  onChange={this.onInputChange}
                 />
 
                 <Button color='teal' fluid size='large'>Login</Button>
