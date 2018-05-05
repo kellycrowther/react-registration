@@ -16,7 +16,7 @@ export default class Login extends Component<any, any> {
     email: '',
     phone_number: '',
     zip_code: '',
-    password: '',
+    password: ''
   };
 
   onSubmit = (e: React.FormEvent<any>) => {
@@ -61,7 +61,11 @@ export default class Login extends Component<any, any> {
   resetState = (e: React.ChangeEvent<any>) => {
     e.target.reset();
     this.setState({
+      first_name: '',
+      last_name: '',
       email: '',
+      phone_number: '',
+      zip_code: '',
       password: ''
     });
   }
@@ -105,7 +109,7 @@ export default class Login extends Component<any, any> {
                 <Form.Input
                   fluid
                   placeholder='Zipcode'
-                  name='zipcode'
+                  name='zip_code'
                   onChange={this.onInputChange}
                 />
 
