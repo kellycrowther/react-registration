@@ -1,0 +1,13 @@
+body>div,
+body>div>div,
+body>div>div>div.register-form {
+  height: 100%;
+}
+
+.register-width {
+  max-width: 450px
+}
+
+.register {
+  height: 100%
+}

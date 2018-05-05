@@ -1,18 +1,22 @@
 import * as React from 'react';
 import { Component } from 'react';
-import './Login.css';
+import './Register.css';
 import { Link } from 'react-router-dom';
 import { Form, Button, Grid, Message, Segment, Header } from 'semantic-ui-react';
-import { LoginInterface } from '../../models/LoginInterface';
+import { RegisterInterface } from '../../models/RegisterInterface';
 
 const API = 'http://localhost:3111';
-const DEFAULT_QUERY = '/login';
+const DEFAULT_QUERY = '/register';
 
 export default class Login extends Component<any, any> {
 
-  state: LoginInterface = {
+  state: RegisterInterface = {
+    first_name: '',
+    last_name: '',
     email: '',
-    password: ''
+    phone_number: '',
+    zip_code: '',
+    password: '',
   };
 
   onSubmit = (e: React.FormEvent<any>) => {
@@ -21,11 +25,11 @@ export default class Login extends Component<any, any> {
     }
     console.log('User Info', this.state);
 
-    this.login(this.state);
+    this.register(this.state);
     this.resetState(e);
   }
 
-  public login(data: LoginInterface) {
+  public register(data: RegisterInterface) {
     console.log('data: ', data);
     fetch(API + DEFAULT_QUERY, {
       method: 'POST',
@@ -36,10 +40,10 @@ export default class Login extends Component<any, any> {
     }).then(res => {
       res.json()
         .then(payload => {
-        console.log('Response:', res);
-        console.log('payload: ', payload);
+          console.log('Response:', res);
+          console.log('payload: ', payload);
         });
-      })
+    })
       .catch(error => {
         console.error('Error:', error);
       });
@@ -50,7 +54,7 @@ export default class Login extends Component<any, any> {
     // console.log('My Event: ', e.target.value);
     const value = e.target.value;
     this.setState({
-        [e.target.name]: value
+      [e.target.name]: value
     });
   }
 
@@ -65,41 +69,65 @@ export default class Login extends Component<any, any> {
   render() {
 
     return (
-      <div className='login-form'>
+      <div className='register-form'>
         <Grid
           textAlign='center'
-          className='login'
+          className='register'
           verticalAlign='middle'
         >
-          <Grid.Column className='login-width'>
+          <Grid.Column className='register-width'>
             <Header as='h2' color='teal' textAlign='center'>
-              {' '}Log-in to your account
+              {' '}Create your account
         </Header>
             <Form size='large' onSubmit={this.onSubmit}>
               <Segment stacked>
                 <Form.Input
                   fluid
-                  icon='user'
-                  iconPosition='left'
+                  placeholder='First Name'
+                  name='first_name'
+                  onChange={this.onInputChange}
+                />
+
+                <Form.Input
+                  fluid
+                  placeholder='Last Name'
+                  name='last_name'
+                  onChange={this.onInputChange}
+                />
+
+                <Form.Input
+                  fluid
+                  placeholder='Phone Number'
+                  name='phone_number'
+                  onChange={this.onInputChange}
+                />
+
+                <Form.Input
+                  fluid
+                  placeholder='Zipcode'
+                  name='zipcode'
+                  onChange={this.onInputChange}
+                />
+
+                <Form.Input
+                  fluid
                   placeholder='E-mail address'
                   name='email'
                   onChange={this.onInputChange}
                 />
                 <Form.Input
                   fluid
-                  icon='lock'
-                  iconPosition='left'
                   placeholder='Password'
                   type='password'
                   name='password'
                   onChange={this.onInputChange}
                 />
 
-                <Button color='teal' fluid size='large'>Login</Button>
+                <Button color='teal' fluid size='large'>Register</Button>
               </Segment>
             </Form>
             <Message>
-              New to us? <Link to='/register'>Sign Up</Link>
+              Already have an account? <Link to='/login'>Log In</Link>
             </Message>
           </Grid.Column>
         </Grid>
