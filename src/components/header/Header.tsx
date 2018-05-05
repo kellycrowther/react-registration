@@ -21,6 +21,9 @@ const Header = () => {
         <Link to='/add'>
           <Button inverted color='blue'>Add Activity</Button>
         </Link>
+        <Link to='/login'>
+          <Button inverted color='blue'>Login</Button>
+        </Link>
       </Grid.Column>
     </header>
   );

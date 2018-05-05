@@ -4,6 +4,7 @@ import './App.css';
 import Activity from '../activity/Activity';
 import AddActivity from '../add-activity/AddActivity';
 import CartSummary from '../cart/CartSummary';
+import Login from '../login/Login';
 import { Grid, Dimmer, Loader, Icon, Transition } from 'semantic-ui-react';
 import Header from '../header/Header';
 import Filter from '../filter/Filter';
@@ -219,6 +220,11 @@ class App extends Component<any, any> {
               <CartSummary
                 cartSelection={this.state.cart}
               /> )}
+            />
+            <Route
+              exact
+              path='/login'
+              render={() => ( <Login/> )}
             />
           </Switch>
 

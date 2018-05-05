@@ -1,0 +1,13 @@
+body>div,
+body>div>div,
+body>div>div>div.login-form {
+  height: 100%;
+}
+
+.login-width {
+  max-width: 450px
+}
+
+.login {
+  height: 100%
+}
