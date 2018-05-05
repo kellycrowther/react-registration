@@ -83,6 +83,7 @@ export default class Login extends Component<any, any> {
                   iconPosition='left'
                   placeholder='E-mail address'
                   name='email'
+                  required
                   onChange={this.onInputChange}
                 />
                 <Form.Input
@@ -92,6 +93,7 @@ export default class Login extends Component<any, any> {
                   placeholder='Password'
                   type='password'
                   name='password'
+                  required
                   onChange={this.onInputChange}
                 />
 

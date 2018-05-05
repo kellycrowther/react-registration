@@ -90,6 +90,7 @@ export default class Login extends Component<any, any> {
                   placeholder='First Name'
                   name='first_name'
                   onChange={this.onInputChange}
+                  required
                 />
 
                 <Form.Input
@@ -97,6 +98,7 @@ export default class Login extends Component<any, any> {
                   placeholder='Last Name'
                   name='last_name'
                   onChange={this.onInputChange}
+                  required
                 />
 
                 <Form.Input
@@ -104,6 +106,7 @@ export default class Login extends Component<any, any> {
                   placeholder='Phone Number'
                   name='phone_number'
                   onChange={this.onInputChange}
+                  required
                 />
 
                 <Form.Input
@@ -111,6 +114,7 @@ export default class Login extends Component<any, any> {
                   placeholder='Zipcode'
                   name='zip_code'
                   onChange={this.onInputChange}
+                  required
                 />
 
                 <Form.Input
@@ -118,6 +122,7 @@ export default class Login extends Component<any, any> {
                   placeholder='E-mail address'
                   name='email'
                   onChange={this.onInputChange}
+                  required
                 />
                 <Form.Input
                   fluid
@@ -125,6 +130,7 @@ export default class Login extends Component<any, any> {
                   type='password'
                   name='password'
                   onChange={this.onInputChange}
+                  required
                 />
 
                 <Button color='teal' fluid size='large'>Register</Button>
