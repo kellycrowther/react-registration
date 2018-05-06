@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Component } from 'react';
 import './Register.css';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Form, Button, Grid, Message, Segment, Header } from 'semantic-ui-react';
 import { RegisterInterface } from '../../models/RegisterInterface';
+import Authentication from '../../services/authentication';
 
-const API = 'http://localhost:3111';
-const DEFAULT_QUERY = '/register';
+const auth = new Authentication();
 
-export default class Login extends Component<any, any> {
+class Register extends Component<any, any> {
 
   state: RegisterInterface = {
     first_name: '',
@@ -31,17 +31,13 @@ export default class Login extends Component<any, any> {
 
   public register(data: RegisterInterface) {
     console.log('data: ', data);
-    fetch(API + DEFAULT_QUERY, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    }).then(res => {
+    auth.register(data).then(res => {
       res.json()
-        .then(payload => {
+        .then((payload: any) => {
           console.log('Response:', res);
           console.log('payload: ', payload);
+          auth.setLogin(payload.token);
+          this.props.history.push('/cart');
         });
     })
       .catch(error => {
@@ -145,3 +141,5 @@ export default class Login extends Component<any, any> {
     );
   }
 }
+
+export default withRouter(Register);

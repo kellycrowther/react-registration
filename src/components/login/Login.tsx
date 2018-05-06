@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Component } from 'react';
 import './Login.css';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Form, Button, Grid, Message, Segment, Header } from 'semantic-ui-react';
 import { LoginInterface } from '../../models/LoginInterface';
+import Authentication  from '../../services/authentication';
 
-const API = 'http://localhost:3111';
-const DEFAULT_QUERY = '/login';
+const auth = new Authentication();
 
-export default class Login extends Component<any, any> {
+class Login extends Component<any, any> {
 
   state: LoginInterface = {
     email: '',
@@ -25,21 +25,20 @@ export default class Login extends Component<any, any> {
     this.resetState(e);
   }
 
-  public login(data: LoginInterface) {
-    console.log('data: ', data);
-    fetch(API + DEFAULT_QUERY, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    }).then(res => {
-      res.json()
-        .then(payload => {
-        console.log('Response:', res);
-        console.log('payload: ', payload);
-        });
-      })
+  login = (data: LoginInterface) => {
+    auth.login(data).then(res => {
+      if (res.status === 200) {
+        res.json()
+          .then((payload: any) => {
+            console.log('Response:', res);
+            console.log('payload: ', payload);
+            auth.setLogin(payload.token);
+            this.props.history.push('/cart');
+          });
+      } else {
+        console.log('Authentication Failed');
+      }
+    })
       .catch(error => {
         console.error('Error:', error);
       });
@@ -109,3 +108,5 @@ export default class Login extends Component<any, any> {
     );
   }
 }
+
+export default withRouter(Login);
