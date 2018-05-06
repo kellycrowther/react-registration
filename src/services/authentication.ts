@@ -4,6 +4,7 @@ import { RegisterInterface } from '../models/RegisterInterface';
 const API = 'http://localhost:3111';
 const LOGIN_ROUTE = '/login';
 const REGISTER_ROUTE = '/register';
+const SECRET_ROUTE = '/secret';
 
 export default class Authentication {
   public isLoggedIn: boolean = false;
@@ -30,13 +31,33 @@ export default class Authentication {
     });
   }
 
+  public secret() {
+    let token = localStorage.getItem('token');
+    console.log('token: ', token);
+    fetch(API + SECRET_ROUTE, {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `bearer ${token}`
+      })
+    })
+    .then(res => {
+      console.log('res: ', res);
+      res.json().then(payload => {
+        console.log('payload: ', payload);
+      });
+    })
+    .catch(err => {
+      console.log('err: ', err);
+    });
+  }
+
   setLogin = (token: string) => {
     this.isLoggedIn = true;
     localStorage.setItem('token', token);
     console.log('logged in: ', this.isLoggedIn);
   }
 
-  getToken = () => {
+  public getToken() {
     return localStorage.getItem('token');
   }
 

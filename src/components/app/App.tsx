@@ -100,7 +100,7 @@ class App extends Component<any, any> {
     return day;
   }
 
-  activitySelection (data: any, e: any) {
+  activitySelection = (data: any, e: any) => {
     this.state.cart.push(data);
     console.log('Cart Selection: ', this.state.cart);
     this.setState(this.state);
