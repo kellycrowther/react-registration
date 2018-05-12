@@ -178,7 +178,7 @@ class App extends Component<any, any> {
       <Activity
         index={index}
         activity={activity}
-        key={activity.date_id}
+        key={activity.availability_id}
         onClick={this.activitySelection}
       />
     ));

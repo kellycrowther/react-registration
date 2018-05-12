@@ -6,7 +6,7 @@ export interface ActivityI {
   ageRestriction: string;
   price: number;
   activity_id: number;
-  date_id: number;
+  availability_id: number;
   canEdit?: boolean;
   category: string;
   day: string;

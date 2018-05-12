@@ -47,7 +47,7 @@ export default class CartSummary extends Component<any, any> {
         <CartActivity
           index={index}
           activity={activity}
-          key={activity.date_id}
+          key={activity.availability_id}
         />
       );
     });
