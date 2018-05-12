@@ -7,25 +7,31 @@ const API = 'http://localhost:3111';
 const ORDER_ROUTE = '/order';
 
 export default class CartSummary extends Component<any, any> {
-  getActivityIds = () => {
-    let activityIds: Array<any> = [];
-    let activityIdsObject: Object;
+  // get availability and activity ids
+  getIds = () => {
+    let activityIds: Array<number> = [];
+    let availabilityIds: Array<number> = [];
+    let idsObject: Object;
     for (let x = 0; x < this.props.cartSelection.length; x++) {
       activityIds.push(this.props.cartSelection[x].activity_id);
+      availabilityIds.push(this.props.cartSelection[x].availability_id);
     }
 
-    activityIdsObject = { activityIds: activityIds };
-    return activityIdsObject;
+    idsObject = { 
+      activityIds: activityIds,
+      availabilityIds: availabilityIds
+    };
+    return idsObject;
   }
 
   submitOrder = () => {
-    let activityIds = this.getActivityIds();
-    console.log('activityIds: ', activityIds);
+    let ids = this.getIds();
+    console.log('activityIds: ', ids);
     let token = localStorage.getItem('token');
     console.log('token: ', token);
     fetch(API + ORDER_ROUTE, {
       method: 'POST',
-      body: JSON.stringify(activityIds),
+      body: JSON.stringify(ids),
       headers: new Headers({
         'Authorization': `bearer ${token}`,
         'Content-Type': 'application/json'
