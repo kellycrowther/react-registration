@@ -9,12 +9,15 @@ import Register from '../register/Register';
 import { Grid, Dimmer, Loader, Icon, Transition } from 'semantic-ui-react';
 import Header from '../header/Header';
 import Filter from '../filter/Filter';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { ActivityI } from '../../models/activity';
 import FilterDate  from '../filter-date/FilterDate';
+import Auth from '../../services/authentication';
 
 const API = 'http://localhost:3111';
 const DEFAULT_QUERY = '/activities';
+
+const auth = new Auth();
 
 interface State {
   availableActivity: Array<AvailableActivity>;
@@ -208,10 +211,13 @@ class App extends Component<any, any> {
               exact
               path='/add' 
               render={() => (
-              <AddActivity 
-                toggleDimmer={this.toggleDimmer}
-                toggleSuccess={this.toggleSuccess}
-              /> 
+                auth.getRole() === 'admin' ?
+                  <AddActivity 
+                    toggleDimmer={this.toggleDimmer}
+                    toggleSuccess={this.toggleSuccess}
+                  />
+                :
+                <Redirect to='/login' />
             )}
             />
             <Route 

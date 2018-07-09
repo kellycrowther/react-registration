@@ -2,6 +2,9 @@ import * as React from 'react';
 // import logo from '../../assets/logo.svg';
 import { Link } from 'react-router-dom';
 import { Button, Icon, Grid } from 'semantic-ui-react';
+import Auth from '../../services/authentication';
+
+const auth = new Auth();
 
 const Header = () => {
   return (
@@ -18,9 +21,14 @@ const Header = () => {
             Cart
             </Button>
         </Link>
-        <Link to='/add'>
-          <Button inverted color='blue'>Add Activity</Button>
-        </Link>
+        {
+          auth.getRole() === 'admin' ?
+            <Link to='/add'>
+              <Button inverted color='blue'>Add Activity</Button>
+            </Link>
+            :
+            null
+        }
         <Link to='/login'>
           <Button inverted color='blue'>Login</Button>
         </Link>

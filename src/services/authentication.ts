@@ -8,6 +8,7 @@ const SECRET_ROUTE = '/secret';
 
 export default class Authentication {
   public isLoggedIn: boolean = false;
+  public role: string;
 
   public login(data: LoginInterface): Promise<any> {
     console.log('login: ', data);
@@ -51,10 +52,13 @@ export default class Authentication {
     });
   }
 
-  setLogin = (token: string) => {
+  setLogin = (token: string, role: string) => {
     this.isLoggedIn = true;
+    this.role = role;
+    localStorage.setItem('role', role);
     localStorage.setItem('token', token);
     console.log('logged in: ', this.isLoggedIn);
+    console.log('role: ', this.role);
   }
 
   public getToken() {
@@ -64,5 +68,10 @@ export default class Authentication {
   logout = () => {
     this.isLoggedIn = false;
     localStorage.removeItem('token');
+  }
+
+  public getRole(): (string | null) {
+    let role = localStorage.getItem('role');
+    return role;
   }
 }

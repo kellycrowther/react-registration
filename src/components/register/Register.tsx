@@ -36,7 +36,7 @@ class Register extends Component<any, any> {
         .then((payload: any) => {
           console.log('Response:', res);
           console.log('payload: ', payload);
-          auth.setLogin(payload.token);
+          auth.setLogin(payload.token, payload.role);
           this.props.history.push('/cart');
         });
     })
