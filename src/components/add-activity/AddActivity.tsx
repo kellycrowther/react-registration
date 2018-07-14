@@ -8,9 +8,11 @@ import DatePicker from './DatePicker';
 import Category from './Category';
 import { AvailabilityInterface } from '../../models/AvailabilityInterface';
 import { AddActivityInterface } from '../../models/AddActivityInterface';
+import Auth from '../../services/authentication';
 
 const API = 'http://localhost:3111';
 const DEFAULT_QUERY = '/activities';
+const auth = new Auth();
 
 export default class AddActivity extends Component<any, any> {
 
@@ -66,18 +68,21 @@ export default class AddActivity extends Component<any, any> {
       category: this.state.newActivity.category,
       availability: this.state.newActivity.availability,
     };
+
+    let token = auth.getToken();
     
     this.props.toggleDimmer();
-    this.addActivity(activity);
+    this.addActivity(activity, token);
     this.resetState(e);
   }
 
-  public addActivity(data: any) {
+  public addActivity(data: any, token: string) {
     fetch(API + DEFAULT_QUERY, {
       method: 'POST', // or 'PUT'
       body: JSON.stringify(data),
       headers: new Headers({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `bearer ${token}`
       })
     }).then(res => {
       res.json();

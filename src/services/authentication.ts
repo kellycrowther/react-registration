@@ -61,8 +61,10 @@ export default class Authentication {
     console.log('role: ', this.role);
   }
 
-  public getToken() {
-    return localStorage.getItem('token');
+  public getToken(): string {
+    let retrievedToken = localStorage.getItem('token');
+    let token = retrievedToken ? retrievedToken : '';
+    return token;
   }
 
   logout = () => {
