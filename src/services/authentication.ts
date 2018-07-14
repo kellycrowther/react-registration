@@ -52,7 +52,7 @@ export default class Authentication {
     });
   }
 
-  setLogin = (token: string, role: string) => {
+  setLogin = (token: string) => {
     this.isLoggedIn = true;
     localStorage.setItem('token', token);
   }

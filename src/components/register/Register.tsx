@@ -30,18 +30,17 @@ class Register extends Component<any, any> {
   }
 
   public register(data: RegisterInterface) {
-    console.log('data: ', data);
+    console.info('Register->register()', data);
     auth.register(data).then(res => {
       res.json()
         .then((payload: any) => {
-          console.log('Response:', res);
-          console.log('payload: ', payload);
-          auth.setLogin(payload.token, payload.role);
+          console.info('Register->register()->payload', payload);
+          auth.setLogin(payload.token);
           this.props.history.push('/cart');
         });
     })
       .catch(error => {
-        console.error('Error:', error);
+        console.error('Register->register()->Error', error);
       });
   }
 

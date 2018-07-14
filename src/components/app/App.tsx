@@ -69,21 +69,21 @@ class App extends Component<any, any> {
 
   componentDidMount () {
     // better way to set state then looping through?
-    console.log('componentDidMount()~');
+    console.info('~componentDidMount()');
     fetch(API + DEFAULT_QUERY)
       .then(response => response.json())
       .then((data) => {
-        console.log('data from local api: ', data);
+        console.log('App->componentDidMount()->Data', data);
         for (let x = 0; x < data.length; x++) {
           data[x].day = this.getDayAsString(data[x].date);
           this.state.availableActivity.push(data[x]);
         }
-        console.log('state after fetch: ', this.state);
+        console.info('App->componentDidMount()->State', this.state);
         this.setState(this.state);
         this.initialActivities = this.state.availableActivity;
       })
       .catch((err) => {
-        console.log('error getting data', err);
+        console.error('App->componentDidMount()->Error getting data', err);
       });
   }
 
@@ -105,7 +105,7 @@ class App extends Component<any, any> {
 
   activitySelection = (data: any, e: any) => {
     this.state.cart.push(data);
-    console.log('Cart Selection: ', this.state.cart);
+    console.info('App->activitySelection()', this.state.cart);
     this.setState(this.state);
   }
 

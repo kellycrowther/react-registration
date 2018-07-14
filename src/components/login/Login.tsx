@@ -30,17 +30,16 @@ class Login extends Component<any, any> {
       if (res.status === 200) {
         res.json()
           .then((payload: any) => {
-            console.log('Response:', res);
-            console.log('payload: ', payload);
-            auth.setLogin(payload.token, payload.role);
+            console.info('Login->login()', payload);
+            auth.setLogin(payload.token);
             this.props.history.push('/cart');
           });
       } else {
-        console.log('Authentication Failed');
+        console.error('Login->login()->Authentication Failed');
       }
     })
       .catch(error => {
-        console.error('Error:', error);
+        console.error('Login->login()->Error:', error);
       });
   }
 

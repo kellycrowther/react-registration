@@ -58,7 +58,7 @@ export default class AddActivity extends Component<any, any> {
     if (e) {
       e.preventDefault();
     }
-    console.log('My Activity Added', this.state);
+    console.info('AddActivity->onSubmit()', this.state);
     let activity = {
       activityName: this.state.newActivity.activityName,
       location: this.state.newActivity.location,
@@ -86,7 +86,7 @@ export default class AddActivity extends Component<any, any> {
       })
     }).then(res => {
       res.json();
-      console.log('Success:', res);
+      console.info('AddActivity->addActivity():', res);
       this.props.toggleSuccess();
     })
       .catch(error => console.error('Error:', error))
@@ -128,7 +128,7 @@ export default class AddActivity extends Component<any, any> {
   }
 
   addDatePickerComponent = () => {
-    console.log('addDatePickerComponent');
+    console.info('AddActivity->addDatePickerComponent()');
     this.setState({
       dateComponent: this.state.dateComponent + 1
     });
