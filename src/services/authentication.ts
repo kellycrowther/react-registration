@@ -1,5 +1,6 @@
 import { LoginInterface } from '../models/LoginInterface';
 import { RegisterInterface } from '../models/RegisterInterface';
+import * as JWT from 'jsonwebtoken';
 
 const API = 'http://localhost:3111';
 const LOGIN_ROUTE = '/login';
@@ -8,7 +9,6 @@ const SECRET_ROUTE = '/secret';
 
 export default class Authentication {
   public isLoggedIn: boolean = false;
-  public role: string;
 
   public login(data: LoginInterface): Promise<any> {
     console.log('login: ', data);
@@ -54,11 +54,7 @@ export default class Authentication {
 
   setLogin = (token: string, role: string) => {
     this.isLoggedIn = true;
-    this.role = role;
-    localStorage.setItem('role', role);
     localStorage.setItem('token', token);
-    console.log('logged in: ', this.isLoggedIn);
-    console.log('role: ', this.role);
   }
 
   public getToken(): string {
@@ -73,7 +69,14 @@ export default class Authentication {
   }
 
   public getRole(): (string | null) {
-    let role = localStorage.getItem('role');
+    let role = this.decodeToken();
+    role = role.role;
     return role;
+  }
+
+  public decodeToken(): any {
+    let token = this.getToken();
+    let payload = JWT.decode(token);
+    return payload;
   }
 }
