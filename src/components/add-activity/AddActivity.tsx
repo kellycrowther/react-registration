@@ -85,7 +85,6 @@ export default class AddActivity extends Component<any, any> {
         'Authorization': `bearer ${token}`
       })
     }).then(res => {
-      res.json();
       console.info('AddActivity->addActivity():', res);
       this.props.toggleSuccess();
     })

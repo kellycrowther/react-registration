@@ -72,14 +72,12 @@ export default class Authentication {
   public getRole(): (string | null) {
     let role = this.decodeToken();
     role = role.role;
-    console.info('Authentication->getRole()', role);
     return role;
   }
 
   public decodeToken(): any {
     let token = this.getToken();
     let payload = JWT.decode(token);
-    console.info('Authentication->decodeToken()', payload);
     return payload;
   }
 }
