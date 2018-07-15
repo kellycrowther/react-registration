@@ -52,6 +52,7 @@ export default class Authentication {
     });
   }
 
+  // setting token in local storage means you must use HTTPS to avoid attacks
   setLogin = (token: string) => {
     this.isLoggedIn = true;
     localStorage.setItem('token', token);
